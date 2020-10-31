@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <item-->
+<!--        android:id="@+id/title_template"-->
+<!--        android:title="title">-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:id="@+id/share"-->
+<!--                android:icon="@drawable/ic_action_share"-->
+<!--                android:title="Share"-->
+<!--                android:visible="true" />-->
+<!--            <item-->
+<!--                android:id="@+id/export_data"-->
+<!--                android:icon="@drawable/icons_export"-->
+<!--                android:title="Export Data"-->
+<!--                android:visible="true" />-->
+<!--            <item-->
+<!--                android:id="@+id/delete"-->
+<!--                android:icon="@drawable/ic_delete"-->
+<!--                android:title="Delete"-->
+<!--                android:visible="true" />-->
+<!--        </menu>-->
+<!--    </item>-->
+
+    <!--export-->
+    <item android:id="@+id/action_export"
+        android:title="Export"/>
+    <!--short item menu-->
+    <item android:id="@+id/action_sort"
+        android:title="Short"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_filter"/>
+
+</menu>

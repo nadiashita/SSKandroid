@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>MyModulesAdapter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MyModulesAdapter.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.si_ware.neospectra.Adapters; 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">import </span><span class="s1">android.content.Context; 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">import </span><span class="s1">android.content.Intent; 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">import </span><span class="s1">android.support.annotation.NonNull; 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s0">import </span><span class="s1">android.support.constraint.ConstraintLayout; 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">import </span><span class="s1">android.support.v7.widget.RecyclerView; 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">import </span><span class="s1">android.view.LayoutInflater; 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s0">import </span><span class="s1">android.view.View; 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">import </span><span class="s1">android.view.ViewGroup; 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s0">import </span><span class="s1">android.widget.CheckBox; 
+<a name="l12"><span class="ln">12   </span></a></span><span class="s0">import </span><span class="s1">android.widget.ImageView; 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+<a name="l15"><span class="ln">15   </span></a> 
+<a name="l16"><span class="ln">16   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Activities/MainActivity.java.html">com.si_ware.neospectra.Activities.MainActivity</a></span><span class="s1">; 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Activities/NavDrawerActivity.java.html">com.si_ware.neospectra.Activities.NavDrawerActivity</a></span><span class="s1">; 
+<a name="l18"><span class="ln">18   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/DataIO/DataIO.java.html">com.si_ware.neospectra.DataIO.DataIO</a></span><span class="s1">; 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">com.si_ware.neospectra.Global.GlobalVariables</a></span><span class="s1">; 
+<a name="l20"><span class="ln">20   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Models/dbModule.java.html">com.si_ware.neospectra.Models.dbModule</a></span><span class="s1">; 
+<a name="l21"><span class="ln">21   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Models/dbModuleInfo.java.html">com.si_ware.neospectra.Models.dbModuleInfo</a></span><span class="s1">; 
+<a name="l22"><span class="ln">22   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/R.java.html">com.si_ware.neospectra.R</a></span><span class="s1">; 
+<a name="l23"><span class="ln">23   </span></a> 
+<a name="l24"><span class="ln">24   </span></a></span><span class="s0">import </span><span class="s1">java.util.List; 
+<a name="l25"><span class="ln">25   </span></a> 
+<a name="l26"><span class="ln">26   </span></a></span><span class="s0">import static <a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">com.si_ware.neospectra.Global.GlobalVariables</a></span><span class="s1">.currentModule; 
+<a name="l27"><span class="ln">27   </span></a></span><span class="s0">import static <a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">com.si_ware.neospectra.Global.GlobalVariables</a></span><span class="s1">.mySettings; 
+<a name="l28"><span class="ln">28   </span></a></span><span class="s0">import static <a href="../../../../com/si_ware/neospectra/Global/MethodsFactory.java.html">com.si_ware.neospectra.Global.MethodsFactory</a></span><span class="s1">.logMessage; 
+<a name="l29"><span class="ln">29   </span></a> 
+<a name="l30"><span class="ln">30   </span></a></span><span class="s2">/** 
+<a name="l31"><span class="ln">31   </span></a> * Created by AmrWinter on 4/28/18. 
+<a name="l32"><span class="ln">32   </span></a> */</span><span class="s1"> 
+<a name="l33"><span class="ln">33   </span></a> 
+<a name="l34"><span class="ln">34   </span></a></span><span class="s0">public class </span><span class="s1">MyModulesAdapter </span><span class="s0">extends </span><span class="s1">RecyclerView.Adapter&lt;MyModulesAdapter.MyViewHolder&gt; { 
+<a name="l35"><span class="ln">35   </span></a> 
+<a name="l36"><span class="ln">36   </span></a>    </span><span class="s0">private </span><span class="s1">LayoutInflater inflater; 
+<a name="l37"><span class="ln">37   </span></a>    </span><span class="s0">private </span><span class="s1">List&lt;dbModuleInfo&gt; modules; 
+<a name="l38"><span class="ln">38   </span></a>    </span><span class="s0">private int </span><span class="s1">primaryModulePosition = -</span><span class="s3">1</span><span class="s1">; 
+<a name="l39"><span class="ln">39   </span></a>    @NonNull 
+<a name="l40"><span class="ln">40   </span></a>    </span><span class="s0">private </span><span class="s1">String TAG = </span><span class="s4">&quot;MyModulesAdapter&quot;</span><span class="s1">; 
+<a name="l41"><span class="ln">41   </span></a>    </span><span class="s0">private </span><span class="s1">Context mContext; 
+<a name="l42"><span class="ln">42   </span></a> 
+<a name="l43"><span class="ln">43   </span></a>    </span><span class="s0">public </span><span class="s1">MyModulesAdapter(Context mContext, List&lt;dbModuleInfo&gt; list){ 
+<a name="l44"><span class="ln">44   </span></a>        inflater = LayoutInflater.from(mContext); 
+<a name="l45"><span class="ln">45   </span></a>        logMessage(TAG, </span><span class="s4">&quot;Constructor of my modules adapter&quot;</span><span class="s1">); 
+<a name="l46"><span class="ln">46   </span></a>        </span><span class="s0">this</span><span class="s1">.modules = list; 
+<a name="l47"><span class="ln">47   </span></a>        </span><span class="s0">this</span><span class="s1">.mContext = mContext; 
+<a name="l48"><span class="ln">48   </span></a>        logMessage(TAG, </span><span class="s4">&quot;List length: &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.modules.size()); 
+<a name="l49"><span class="ln">49   </span></a>    } 
+<a name="l50"><span class="ln">50   </span></a> 
+<a name="l51"><span class="ln">51   </span></a>    @NonNull 
+<a name="l52"><span class="ln">52   </span></a>    @Override 
+<a name="l53"><span class="ln">53   </span></a>    </span><span class="s0">public </span><span class="s1">MyViewHolder onCreateViewHolder(ViewGroup parent, </span><span class="s0">int </span><span class="s1">viewType) { 
+<a name="l54"><span class="ln">54   </span></a>        View view = inflater.inflate(<a href="../../../../com/si_ware/neospectra/R.java.html">R.layout</a>.row_my_module, parent, </span><span class="s0">false</span><span class="s1">); 
+<a name="l55"><span class="ln">55   </span></a>        </span><span class="s0">return new </span><span class="s1">MyViewHolder(view); 
+<a name="l56"><span class="ln">56   </span></a>    } 
+<a name="l57"><span class="ln">57   </span></a> 
+<a name="l58"><span class="ln">58   </span></a>    @Override 
+<a name="l59"><span class="ln">59   </span></a>    </span><span class="s0">public void </span><span class="s1">onBindViewHolder(@NonNull MyViewHolder currentViewHolder, </span><span class="s0">int </span><span class="s1">position) { 
+<a name="l60"><span class="ln">60   </span></a></span><span class="s2">//        logDebugging(TAG, &quot;On Bind View 0&quot;);</span><span class="s1"> 
+<a name="l61"><span class="ln">61   </span></a> 
+<a name="l62"><span class="ln">62   </span></a>        </span><span class="s0">try </span><span class="s1">{ 
+<a name="l63"><span class="ln">63   </span></a></span><span class="s2">//            logDebugging(TAG, &quot;On Bind View 1&quot;);</span><span class="s1"> 
+<a name="l64"><span class="ln">64   </span></a>            <a href="../../../../com/si_ware/neospectra/Models/dbModuleInfo.java.html">dbModuleInfo</a> tempModule = modules.get(currentViewHolder.getAdapterPosition()); 
+<a name="l65"><span class="ln">65   </span></a> 
+<a name="l66"><span class="ln">66   </span></a></span><span class="s2">//            logDebugging(TAG, &quot;Info: &quot; + (currentModule.getModuleInfo() == null));</span><span class="s1"> 
+<a name="l67"><span class="ln">67   </span></a>            currentViewHolder.icon.setImageBitmap(tempModule.getIcon()); 
+<a name="l68"><span class="ln">68   </span></a>            currentViewHolder.moduleName.setText(tempModule.getName()); 
+<a name="l69"><span class="ln">69   </span></a>            </span><span class="s0">if </span><span class="s1">(tempModule.getName().toLowerCase().equals(<a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">GlobalVariables</a>.mySettings 
+<a name="l70"><span class="ln">70   </span></a>                    .getPrimaryModuleName().toLowerCase())){ 
+<a name="l71"><span class="ln">71   </span></a>                currentViewHolder.isPrimary.setChecked(</span><span class="s0">true</span><span class="s1">); 
+<a name="l72"><span class="ln">72   </span></a>                primaryModulePosition = currentViewHolder.getAdapterPosition(); 
+<a name="l73"><span class="ln">73   </span></a>                </span><span class="s2">// TODO: 6/1/18 Display message that there are missing values in the module info</span><span class="s1"> 
+<a name="l74"><span class="ln">74   </span></a>                </span><span class="s2">// and ask the user to contact Si-Ware to provide it.</span><span class="s1"> 
+<a name="l75"><span class="ln">75   </span></a>            } 
+<a name="l76"><span class="ln">76   </span></a></span><span class="s2">//            logDebugging(TAG, &quot;On Bind View 2&quot;);</span><span class="s1"> 
+<a name="l77"><span class="ln">77   </span></a>        }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+<a name="l78"><span class="ln">78   </span></a></span><span class="s2">//            logDebugging(TAG, e.getMessage());</span><span class="s1"> 
+<a name="l79"><span class="ln">79   </span></a>        } 
+<a name="l80"><span class="ln">80   </span></a> 
+<a name="l81"><span class="ln">81   </span></a>        currentViewHolder.clMyModule.setOnClickListener(view -&gt; { 
+<a name="l82"><span class="ln">82   </span></a>            </span><span class="s2">// Read this module and set it as default module</span><span class="s1"> 
+<a name="l83"><span class="ln">83   </span></a>            currentModule = <a href="../../../../com/si_ware/neospectra/DataIO/DataIO.java.html">DataIO</a>.retrieveDefaultModule(mContext, 
+<a name="l84"><span class="ln">84   </span></a>                    modules.get(currentViewHolder.getAdapterPosition()).getName()); 
+<a name="l85"><span class="ln">85   </span></a> 
+<a name="l86"><span class="ln">86   </span></a>            mySettings.setPrimaryModuleName(currentModule.getModuleName()); 
+<a name="l87"><span class="ln">87   </span></a>            </span><span class="s2">// Inform the user that the primary module has changed</span><span class="s1"> 
+<a name="l88"><span class="ln">88   </span></a>            Toast.makeText(mContext, 
+<a name="l89"><span class="ln">89   </span></a>                    </span><span class="s4">&quot;The primary Module is: &quot; </span><span class="s1">+ mySettings.getPrimaryModuleName(), 
+<a name="l90"><span class="ln">90   </span></a>                    Toast.LENGTH_LONG).show(); 
+<a name="l91"><span class="ln">91   </span></a>            gotoScan(); 
+<a name="l92"><span class="ln">92   </span></a>        }); 
+<a name="l93"><span class="ln">93   </span></a>    } 
+<a name="l94"><span class="ln">94   </span></a> 
+<a name="l95"><span class="ln">95   </span></a>    </span><span class="s0">private void </span><span class="s1">gotoScan(){ 
+<a name="l96"><span class="ln">96   </span></a>        logMessage(TAG, </span><span class="s4">&quot;Goto Scan&quot;</span><span class="s1">); 
+<a name="l97"><span class="ln">97   </span></a>        Intent iScan = </span><span class="s0">new </span><span class="s1">Intent(mContext, <a href="../../../../com/si_ware/neospectra/Activities/MainActivity.java.html">MainActivity</a>.</span><span class="s0">class</span><span class="s1">); 
+<a name="l98"><span class="ln">98   </span></a>        iScan.putExtra(</span><span class="s4">&quot;goto&quot;</span><span class="s1">, <a href="../../../../com/si_ware/neospectra/Activities/NavDrawerActivity.java.html">NavDrawerActivity</a>.GOTO_FRAGMENT_SCAN); 
+<a name="l99"><span class="ln">99   </span></a>        iScan.putExtra(</span><span class="s4">&quot;moduleName&quot;</span><span class="s1">, currentModule.getModuleName()); 
+<a name="l100"><span class="ln">100  </span></a>        mContext.startActivity(iScan); 
+<a name="l101"><span class="ln">101  </span></a>    } 
+<a name="l102"><span class="ln">102  </span></a> 
+<a name="l103"><span class="ln">103  </span></a> 
+<a name="l104"><span class="ln">104  </span></a>    @Override 
+<a name="l105"><span class="ln">105  </span></a>    </span><span class="s0">public int </span><span class="s1">getItemCount() { 
+<a name="l106"><span class="ln">106  </span></a>        </span><span class="s0">return </span><span class="s1">modules.size(); 
+<a name="l107"><span class="ln">107  </span></a>    } 
+<a name="l108"><span class="ln">108  </span></a> 
+<a name="l109"><span class="ln">109  </span></a>    </span><span class="s0">class </span><span class="s1">MyViewHolder </span><span class="s0">extends </span><span class="s1">RecyclerView.ViewHolder { 
+<a name="l110"><span class="ln">110  </span></a> 
+<a name="l111"><span class="ln">111  </span></a>        </span><span class="s0">private </span><span class="s1">ImageView icon; 
+<a name="l112"><span class="ln">112  </span></a>        </span><span class="s0">private </span><span class="s1">TextView moduleName; 
+<a name="l113"><span class="ln">113  </span></a>        </span><span class="s0">private </span><span class="s1">CheckBox isPrimary; 
+<a name="l114"><span class="ln">114  </span></a>        </span><span class="s0">private </span><span class="s1">ConstraintLayout clMyModule; 
+<a name="l115"><span class="ln">115  </span></a> 
+<a name="l116"><span class="ln">116  </span></a>        MyViewHolder(@NonNull View itemView) { 
+<a name="l117"><span class="ln">117  </span></a>            </span><span class="s0">super</span><span class="s1">(itemView); 
+<a name="l118"><span class="ln">118  </span></a>            icon = itemView.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.iv_module_icon); 
+<a name="l119"><span class="ln">119  </span></a>            moduleName = itemView.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.tv_module_name); 
+<a name="l120"><span class="ln">120  </span></a>            isPrimary = itemView.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.cb_is_primary_module); 
+<a name="l121"><span class="ln">121  </span></a>            clMyModule = itemView.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.cl_my_module); 
+<a name="l122"><span class="ln">122  </span></a>        } 
+<a name="l123"><span class="ln">123  </span></a>    } 
+<a name="l124"><span class="ln">124  </span></a>} 
+<a name="l125"><span class="ln">125  </span></a></span></pre>
+</body>
+</html>

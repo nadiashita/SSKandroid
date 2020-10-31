@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SplashScreenActivity"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp"
+    android:background="#ffffff">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_editor_absoluteX="8dp"
+        app:layout_editor_absoluteY="8dp">
+
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Skip"
+        android:textColor="#88A2D3"
+        android:textSize="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_indicator"
+        android:layout_width="38dp"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:tabBackground="@drawable/indicator_selector"></android.support.design.widget.TabLayout>
+
+    <Button
+        android:id="@+id/btn_get_started"
+        android:layout_width="328dp"
+        android:layout_height="56dp"
+        android:background="@color/btnStart"
+        android:fontFamily="@font/poppins_medium"
+        android:text="START"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

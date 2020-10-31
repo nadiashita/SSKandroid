@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>build.gradle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,0); }
+.s1 { color: rgb(0,128,0); font-weight: bold; }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(0,0,67); font-weight: bold; }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+build.gradle</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">apply plugin: </span><span class="s1">'com.android.application'</span><span class="s0"> 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a>android { 
+<a name="l4"><span class="ln">4    </span></a>    compileSdkVersion </span><span class="s2">26</span><span class="s0"> 
+<a name="l5"><span class="ln">5    </span></a>    defaultConfig { 
+<a name="l6"><span class="ln">6    </span></a>        applicationId </span><span class="s1">&quot;com.si_ware.neospectra&quot;</span><span class="s0"> 
+<a name="l7"><span class="ln">7    </span></a>        minSdkVersion </span><span class="s2">19</span><span class="s0"> 
+<a name="l8"><span class="ln">8    </span></a>        targetSdkVersion </span><span class="s2">26</span><span class="s0"> 
+<a name="l9"><span class="ln">9    </span></a>        versionCode </span><span class="s2">2</span><span class="s0"> 
+<a name="l10"><span class="ln">10   </span></a>        versionName </span><span class="s1">&quot;1.0.2&quot;</span><span class="s0"> 
+<a name="l11"><span class="ln">11   </span></a>        testInstrumentationRunner </span><span class="s1">&quot;android.support.test.runner.AndroidJUnitRunner&quot;</span><span class="s0"> 
+<a name="l12"><span class="ln">12   </span></a>        vectorDrawables.useSupportLibrary = </span><span class="s3">true</span><span class="s0"> 
+<a name="l13"><span class="ln">13   </span></a> 
+<a name="l14"><span class="ln">14   </span></a>        testOptions { 
+<a name="l15"><span class="ln">15   </span></a>            unitTests { 
+<a name="l16"><span class="ln">16   </span></a>                returnDefaultValues = </span><span class="s3">true</span><span class="s0"> 
+<a name="l17"><span class="ln">17   </span></a>            } 
+<a name="l18"><span class="ln">18   </span></a>        } 
+<a name="l19"><span class="ln">19   </span></a>    } 
+<a name="l20"><span class="ln">20   </span></a>    buildTypes { 
+<a name="l21"><span class="ln">21   </span></a>        release { 
+<a name="l22"><span class="ln">22   </span></a>            minifyEnabled </span><span class="s3">false</span><span class="s0"> 
+<a name="l23"><span class="ln">23   </span></a>            proguardFiles getDefaultProguardFile(</span><span class="s1">'proguard-android.txt'</span><span class="s0">), </span><span class="s1">'proguard-rules.pro'</span><span class="s0"> 
+<a name="l24"><span class="ln">24   </span></a>        } 
+<a name="l25"><span class="ln">25   </span></a>    } 
+<a name="l26"><span class="ln">26   </span></a>    productFlavors { 
+<a name="l27"><span class="ln">27   </span></a>    } 
+<a name="l28"><span class="ln">28   </span></a>    compileOptions { 
+<a name="l29"><span class="ln">29   </span></a>        targetCompatibility </span><span class="s2">1.8</span><span class="s0"> 
+<a name="l30"><span class="ln">30   </span></a>        sourceCompatibility </span><span class="s2">1.8</span><span class="s0"> 
+<a name="l31"><span class="ln">31   </span></a>    } 
+<a name="l32"><span class="ln">32   </span></a>} 
+<a name="l33"><span class="ln">33   </span></a></span><span class="s4">//Create gradle task to copy resources into classes directory to make them visible for classloader:</span><span class="s0"> 
+<a name="l34"><span class="ln">34   </span></a>task copyResDirectoryToClasses(type: Copy) { 
+<a name="l35"><span class="ln">35   </span></a>    from </span><span class="s1">&quot;</span><span class="s0">${projectDir}</span><span class="s1">/src/test/res&quot;</span><span class="s0"> 
+<a name="l36"><span class="ln">36   </span></a>    into </span><span class="s1">&quot;</span><span class="s0">${buildDir}</span><span class="s1">/intermediates/classes/test/debug/res&quot;</span><span class="s0"> 
+<a name="l37"><span class="ln">37   </span></a>} 
+<a name="l38"><span class="ln">38   </span></a></span><span class="s4">//assembleDebug.dependsOn(&quot;copyResDirectoryToClasses&quot;)</span><span class="s0"> 
+<a name="l39"><span class="ln">39   </span></a> 
+<a name="l40"><span class="ln">40   </span></a>dependencies { 
+<a name="l41"><span class="ln">41   </span></a>    implementation fileTree(include: [</span><span class="s1">'*.jar'</span><span class="s0">], dir: </span><span class="s1">'libs'</span><span class="s0">) 
+<a name="l42"><span class="ln">42   </span></a>    implementation </span><span class="s1">'com.android.support:appcompat-v7:26.1.0'</span><span class="s0"> 
+<a name="l43"><span class="ln">43   </span></a>    implementation </span><span class="s1">'com.android.support:design:26.1.0'</span><span class="s0"> 
+<a name="l44"><span class="ln">44   </span></a>    implementation </span><span class="s1">'com.android.support.constraint:constraint-layout:1.0.2'</span><span class="s0"> 
+<a name="l45"><span class="ln">45   </span></a>    implementation </span><span class="s1">'com.android.support:support-vector-drawable:26.1.0'</span><span class="s0"> 
+<a name="l46"><span class="ln">46   </span></a>    implementation </span><span class="s1">'com.android.support:support-v4:26.1.0'</span><span class="s0"> 
+<a name="l47"><span class="ln">47   </span></a>    implementation </span><span class="s1">'com.google.android.gms:play-services-auth:11.8.0'</span><span class="s0"> 
+<a name="l48"><span class="ln">48   </span></a>    implementation </span><span class="s1">'com.google.firebase:firebase-messaging:11.8.0'</span><span class="s0"> 
+<a name="l49"><span class="ln">49   </span></a>    apply plugin: </span><span class="s1">'com.google.gms.google-services'</span><span class="s0"> 
+<a name="l50"><span class="ln">50   </span></a>    compile </span><span class="s1">'com.google.code.gson:gson:2.8.1'</span><span class="s0"> 
+<a name="l51"><span class="ln">51   </span></a>    </span><span class="s4">// Dependencies for local unit tests</span><span class="s0"> 
+<a name="l52"><span class="ln">52   </span></a> 
+<a name="l53"><span class="ln">53   </span></a></span><span class="s4">//    testImplementation group: 'org.hamcrest', name: 'hamcrest-core', version: '1.3'</span><span class="s0"> 
+<a name="l54"><span class="ln">54   </span></a></span><span class="s4">//    testImplementation group: 'junit', name: 'junit-dep', version: '4.10'</span><span class="s0"> 
+<a name="l55"><span class="ln">55   </span></a></span><span class="s4">//    testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '1.3'</span><span class="s0"> 
+<a name="l56"><span class="ln">56   </span></a></span><span class="s4">//    testImplementation group: 'org.mockito', name: 'mockito-core', version: '1.9.+'</span><span class="s0"> 
+<a name="l57"><span class="ln">57   </span></a> 
+<a name="l58"><span class="ln">58   </span></a></span><span class="s4">//    testImplementation &quot;junit:junit:$rootProject.ext.junitVersion&quot;</span><span class="s0"> 
+<a name="l59"><span class="ln">59   </span></a></span><span class="s4">//    testImplementation &quot;org.mockito:mockito-all:$rootProject.ext.mockitoVersion&quot;</span><span class="s0"> 
+<a name="l60"><span class="ln">60   </span></a></span><span class="s4">//    testImplementation &quot;org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion&quot;</span><span class="s0"> 
+<a name="l61"><span class="ln">61   </span></a></span><span class="s4">//    testImplementation &quot;org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito&quot;</span><span class="s0"> 
+<a name="l62"><span class="ln">62   </span></a></span><span class="s4">//    testImplementation &quot;org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito&quot;</span><span class="s0"> 
+<a name="l63"><span class="ln">63   </span></a> 
+<a name="l64"><span class="ln">64   </span></a></span><span class="s4">//    testImplementation 'junit:junit:4.12'</span><span class="s0"> 
+<a name="l65"><span class="ln">65   </span></a></span><span class="s4">//    androidTestImplementation 'com.android.support.test:runner:1.0.1'</span><span class="s0"> 
+<a name="l66"><span class="ln">66   </span></a></span><span class="s4">//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'</span><span class="s0"> 
+<a name="l67"><span class="ln">67   </span></a> 
+<a name="l68"><span class="ln">68   </span></a>    compile </span><span class="s1">'com.google.firebase:firebase-storage:11.8.0'</span><span class="s0"> 
+<a name="l69"><span class="ln">69   </span></a>    compile </span><span class="s1">'com.google.firebase:firebase-auth:11.8.0'</span><span class="s0"> 
+<a name="l70"><span class="ln">70   </span></a>    compile </span><span class="s1">'com.android.billingclient:billing:1.0'</span><span class="s0"> 
+<a name="l71"><span class="ln">71   </span></a>    implementation files(</span><span class="s1">'libs/poi-3.7.jar'</span><span class="s0">) 
+<a name="l72"><span class="ln">72   </span></a>    implementation </span><span class="s1">'com.makeramen:roundedimageview:2.3.0'</span><span class="s0"> 
+<a name="l73"><span class="ln">73   </span></a>    implementation files(</span><span class="s1">'libs/commons-math3-3.6.1.jar'</span><span class="s0">) 
+<a name="l74"><span class="ln">74   </span></a>    </span><span class="s4">// Remote Dependency to RxAndroidBLE library</span><span class="s0"> 
+<a name="l75"><span class="ln">75   </span></a>    </span><span class="s4">// used basically in Bluetooth SDK</span><span class="s0"> 
+<a name="l76"><span class="ln">76   </span></a></span><span class="s4">//    compile 'com.polidea.rxandroidble2:rxandroidble:1.6.0'</span><span class="s0"> 
+<a name="l77"><span class="ln">77   </span></a></span><span class="s4">//    compile 'io.reactivex.rxjava2:rxjava:2.1.14'</span><span class="s0"> 
+<a name="l78"><span class="ln">78   </span></a></span><span class="s4">//    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'</span><span class="s0"> 
+<a name="l79"><span class="ln">79   </span></a></span><span class="s4">//    compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'</span><span class="s0"> 
+<a name="l80"><span class="ln">80   </span></a></span><span class="s4">//    compile 'com.trello:rxlifecycle-components:1.0'</span><span class="s0"> 
+<a name="l81"><span class="ln">81   </span></a>    implementation project(</span><span class="s1">':androidlibsvm-release'</span><span class="s0">) 
+<a name="l82"><span class="ln">82   </span></a>    </span><span class="s4">//    implementation 'com.jjoe64:graphview:4.2.2'</span><span class="s0"> 
+<a name="l83"><span class="ln">83   </span></a>    </span><span class="s4">// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple</span><span class="s0"> 
+<a name="l84"><span class="ln">84   </span></a>    compile </span><span class="s1">'com.googlecode.json-simple:json-simple:1.1'</span><span class="s0"> 
+<a name="l85"><span class="ln">85   </span></a>    implementation files(</span><span class="s1">'libs/libsvm-3.1.jar'</span><span class="s0">) 
+<a name="l86"><span class="ln">86   </span></a>    implementation files(</span><span class="s1">'libs/jama-1.0.3.jar'</span><span class="s0">) 
+<a name="l87"><span class="ln">87   </span></a>} 
+<a name="l88"><span class="ln">88   </span></a>apply plugin: </span><span class="s1">'com.google.gms.google-services'</span><span class="s0"> 
+<a name="l89"><span class="ln">89   </span></a></span></pre>
+</body>
+</html>

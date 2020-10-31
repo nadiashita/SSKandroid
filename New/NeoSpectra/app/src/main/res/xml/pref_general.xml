@@ -1,0 +1,107 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="category_measurement_parameters"
+        android:title="Measurement Parameters">
+        <ListPreference
+            android:entries="@array/optical_gain_settings"
+            android:entryValues="@array/optical_gain_settings"
+            android:key="optical_gain_settings"
+            android:summary="Select gain settings most suitable to your measurement"
+            android:title="Optical Gain Settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_data_display"
+        android:title="Data Display">
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="linear_interpolation_switch"
+            android:summary="If disabled, you will get the raw data from the connected NeoSpectra. If enabled, you can ensure that all neoSpectra units provide the same wavelength vector."
+            android:title="Enable Linear Interpolation" />
+        <ListPreference
+            android:dependency="linear_interpolation_switch"
+            android:entries="@array/data_points"
+            android:entryValues="@array/data_points_spinner_content"
+            android:key="data_points"
+            android:title="Number of data points" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_fft_settings"
+        android:title="FFT Settings">
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="fft_settings_switch"
+            android:summary="Select settings for processing Fourier Transform"
+            android:title="Show FFT Settings" />
+        <ListPreference
+            android:dependency="fft_settings_switch"
+            android:entries="@array/apodization_function"
+            android:entryValues="@array/apodization_spinner_content"
+            android:key="apodization_function"
+            android:title="Apodization Function" />
+        <ListPreference
+            android:dependency="fft_settings_switch"
+            android:entries="@array/fft_points"
+            android:entryValues="@array/zero_padding_spinner_content"
+            android:key="fft_points"
+            android:title="Number of FFT Points"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_advanced_settings"
+        android:title="Advanced Settings">
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="advanced_settings_switch"
+            android:title="Show Advanced Settings" />
+        <EditTextPreference
+            android:dependency="advanced_settings_switch"
+            android:key="add_new_optical_gain_settings"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Automatically create new optical gain settings that suit the setup used for the environment"
+            android:title="Add New Optical Gain Settings" />
+        <Preference
+            android:dependency="advanced_settings_switch"
+            android:key="clear_optical_gain_settings"
+            android:title="Clear Optical Gain Settings"/>
+        <Preference
+            android:dependency="advanced_settings_switch"
+            android:key="wavelength_correction"
+            android:title="Wavelength Correction" />
+        <Preference
+            android:dependency="advanced_settings_switch"
+            android:key="store_all_Settings"
+            android:title="Storing All Settings" />
+        <Preference
+            android:dependency="advanced_settings_switch"
+            android:key="restore_default"
+            android:title="Restore Default Settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_save_restore"
+        android:title="Save/Restore Preferences">
+
+        <Preference
+            android:key="scanTime_preferences"
+            android:title="Scan Time" />
+        <Preference
+            android:key="save_preferences"
+            android:title="Save Scanner Preferences" />
+        <Preference
+            android:key="load_preferences"
+            android:title="Restore Scanner Preferences" />
+    </PreferenceCategory>
+
+    <!--android:summary="Inteferogram can be multiplied by an apodization function before FFT to smoothen spectra. Apodization function may affect the performance, and the best choice-->
+    <!--depends on the typical shape of the spectrum. Select the apodization function that is most suitable to your measurement. "/>-->
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+
+</PreferenceScreen>

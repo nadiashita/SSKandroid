@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".Activities.IntroActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="206dp"
+        android:layout_height="247dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/neospectra_h_withsiware" />
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="328dp"
+        android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="#55D24B"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Connect"
+        android:textColor="#ffffff"
+        android:textSize="24sp" />
+
+
+</RelativeLayout>

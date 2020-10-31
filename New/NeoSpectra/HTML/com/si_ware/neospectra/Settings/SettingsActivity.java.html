@@ -1,0 +1,677 @@
+<html>
+<head>
+<title>SettingsActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+SettingsActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.si_ware.neospectra.Settings; 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">import </span><span class="s1">android.content.Context; 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">import </span><span class="s1">android.content.Intent; 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">import </span><span class="s1">android.graphics.Bitmap; 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s0">import </span><span class="s1">android.graphics.BitmapFactory; 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">import </span><span class="s1">android.graphics.Canvas; 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">import </span><span class="s1">android.graphics.Paint; 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s0">import </span><span class="s1">android.graphics.drawable.BitmapDrawable; 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s0">import </span><span class="s1">android.support.annotation.NonNull; 
+<a name="l12"><span class="ln">12   </span></a></span><span class="s0">import </span><span class="s1">android.support.constraint.ConstraintLayout; 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s0">import </span><span class="s1">android.support.v4.widget.DrawerLayout; 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s0">import </span><span class="s1">android.support.v7.widget.RecyclerView; 
+<a name="l15"><span class="ln">15   </span></a></span><span class="s0">import </span><span class="s1">android.util.Log; 
+<a name="l16"><span class="ln">16   </span></a></span><span class="s0">import </span><span class="s1">android.view.LayoutInflater; 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s0">import </span><span class="s1">android.view.View; 
+<a name="l18"><span class="ln">18   </span></a></span><span class="s0">import </span><span class="s1">android.widget.Button; 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s0">import </span><span class="s1">android.widget.CheckBox; 
+<a name="l20"><span class="ln">20   </span></a></span><span class="s0">import </span><span class="s1">android.widget.ProgressBar; 
+<a name="l21"><span class="ln">21   </span></a></span><span class="s0">import </span><span class="s1">android.widget.RadioButton; 
+<a name="l22"><span class="ln">22   </span></a></span><span class="s0">import </span><span class="s1">android.widget.SeekBar; 
+<a name="l23"><span class="ln">23   </span></a></span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+<a name="l24"><span class="ln">24   </span></a></span><span class="s0">import </span><span class="s1">android.widget.ToggleButton; 
+<a name="l25"><span class="ln">25   </span></a> 
+<a name="l26"><span class="ln">26   </span></a></span><span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth; 
+<a name="l27"><span class="ln">27   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Activities/MainActivity.java.html">com.si_ware.neospectra.Activities.MainActivity</a></span><span class="s1">; 
+<a name="l28"><span class="ln">28   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Activities/NavDrawerActivity.java.html">com.si_ware.neospectra.Activities.NavDrawerActivity</a></span><span class="s1">; 
+<a name="l29"><span class="ln">29   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">com.si_ware.neospectra.Global.GlobalVariables</a></span><span class="s1">; 
+<a name="l30"><span class="ln">30   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/Models/dbSettings.java.html">com.si_ware.neospectra.Models.dbSettings</a></span><span class="s1">; 
+<a name="l31"><span class="ln">31   </span></a></span><span class="s0">import <a href="../../../../com/si_ware/neospectra/R.java.html">com.si_ware.neospectra.R</a></span><span class="s1">; 
+<a name="l32"><span class="ln">32   </span></a> 
+<a name="l33"><span class="ln">33   </span></a></span><span class="s0">import static <a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">com.si_ware.neospectra.Global.GlobalVariables</a></span><span class="s1">.myUser; 
+<a name="l34"><span class="ln">34   </span></a></span><span class="s0">import static <a href="../../../../com/si_ware/neospectra/Global/MethodsFactory.java.html">com.si_ware.neospectra.Global.MethodsFactory</a></span><span class="s1">.logMessage; 
+<a name="l35"><span class="ln">35   </span></a></span><span class="s0">import static <a href="../../../../com/si_ware/neospectra/Global/MethodsFactory.java.html">com.si_ware.neospectra.Global.MethodsFactory</a></span><span class="s1">.rotateProgressBar; 
+<a name="l36"><span class="ln">36   </span></a> 
+<a name="l37"><span class="ln">37   </span></a></span><span class="s0">public class </span><span class="s1">SettingsActivity </span><span class="s0">extends <a href="../../../../com/si_ware/neospectra/Activities/NavDrawerActivity.java.html">NavDrawerActivity</a> implements</span><span class="s1"> 
+<a name="l38"><span class="ln">38   </span></a>        View.OnClickListener { 
+<a name="l39"><span class="ln">39   </span></a>    </span><span class="s0">private static final </span><span class="s1">String TAG = </span><span class="s2">&quot;SettingsActivity&quot;</span><span class="s1">; 
+<a name="l40"><span class="ln">40   </span></a>    DrawerLayout drawer; 
+<a name="l41"><span class="ln">41   </span></a>    </span><span class="s0">private <a href="../../../../com/si_ware/neospectra/Models/dbSettings.java.html">dbSettings</a> </span><span class="s1">settings; 
+<a name="l42"><span class="ln">42   </span></a> 
+<a name="l43"><span class="ln">43   </span></a>    </span><span class="s0">private </span><span class="s1">FirebaseAuth mAuth; 
+<a name="l44"><span class="ln">44   </span></a> 
+<a name="l45"><span class="ln">45   </span></a>    </span><span class="s0">private </span><span class="s1">Paint paint; 
+<a name="l46"><span class="ln">46   </span></a>    </span><span class="s0">private </span><span class="s1">CheckBox useDefaultStorageSize; 
+<a name="l47"><span class="ln">47   </span></a>    </span><span class="s0">private </span><span class="s1">SeekBar storageSize; 
+<a name="l48"><span class="ln">48   </span></a></span><span class="s3">//    private TextView storageValue;</span><span class="s1"> 
+<a name="l49"><span class="ln">49   </span></a> 
+<a name="l50"><span class="ln">50   </span></a>    </span><span class="s3">//Bluetooth Area</span><span class="s1"> 
+<a name="l51"><span class="ln">51   </span></a>    </span><span class="s0">private </span><span class="s1">ConstraintLayout bluetoothBoard; 
+<a name="l52"><span class="ln">52   </span></a>    </span><span class="s0">private </span><span class="s1">Button btnBluetoothSearch; 
+<a name="l53"><span class="ln">53   </span></a>    </span><span class="s0">private </span><span class="s1">TextView tvStatus; 
+<a name="l54"><span class="ln">54   </span></a>    </span><span class="s0">private </span><span class="s1">ToggleButton tbEnableBluetooth; 
+<a name="l55"><span class="ln">55   </span></a>    </span><span class="s0">private </span><span class="s1">ProgressBar pbSearching; 
+<a name="l56"><span class="ln">56   </span></a>    </span><span class="s0">private </span><span class="s1">RecyclerView rvDevices; 
+<a name="l57"><span class="ln">57   </span></a>    </span><span class="s3">// TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l58"><span class="ln">58   </span></a></span><span class="s3">//    private List&lt;SWS_P3BLEDevice&gt; bleDevices;</span><span class="s1"> 
+<a name="l59"><span class="ln">59   </span></a></span><span class="s3">//    private SensorsAdapter adapter;</span><span class="s1"> 
+<a name="l60"><span class="ln">60   </span></a>    </span><span class="s0">private boolean </span><span class="s1">isBluetoothEnabled, isLocationEnabled; 
+<a name="l61"><span class="ln">61   </span></a> 
+<a name="l62"><span class="ln">62   </span></a> 
+<a name="l63"><span class="ln">63   </span></a>    </span><span class="s0">private </span><span class="s1">Context mContext; 
+<a name="l64"><span class="ln">64   </span></a> 
+<a name="l65"><span class="ln">65   </span></a>    @Override 
+<a name="l66"><span class="ln">66   </span></a>    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+<a name="l67"><span class="ln">67   </span></a>        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+<a name="l68"><span class="ln">68   </span></a>        LayoutInflater inflater = (LayoutInflater) </span><span class="s0">this</span><span class="s1">.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+<a name="l69"><span class="ln">69   </span></a>        View contentView = inflater.inflate(<a href="../../../../com/si_ware/neospectra/R.java.html">R.layout</a>.activity_settings, </span><span class="s0">null</span><span class="s1">, </span><span class="s0">false</span><span class="s1">); 
+<a name="l70"><span class="ln">70   </span></a>        mContext = </span><span class="s0">this</span><span class="s1">; 
+<a name="l71"><span class="ln">71   </span></a> 
+<a name="l72"><span class="ln">72   </span></a>        </span><span class="s3">/* 
+<a name="l73"><span class="ln">73   </span></a>        String x = &quot;0.00196165\t0.00233573\t0.00267985\t0.00296303\t0.00316582\t0.00328272\t0.00332094\t0.00329702\t0.00323338\t0.00315508\t0.00308624\t0.0030456\t0.00304299\t0.00307849\t0.00314412\t0.00322662\t0.00331081\t0.00338364\t0.0034384\t0.00347692\t0.00350846\t0.00354567\t0.00359963\t0.0036757\t0.00377151\t0.00387753\t0.0039807\t0.00406958\t0.00413871\t0.00419011\t0.00423148\t0.00427238\t0.00431994\t0.00437582\t0.00443584\t0.00449317\t0.0045433\t0.00458773\t0.00463377\t0.00469082\t0.00476563\t0.00485927\t0.00496631\t0.0050757\t0.0051735\t0.00524768\t0.00529336\t0.00531552\t0.00532715\t0.0053431\t0.0053729\t0.00541636\t0.00546371\t0.00549984\t0.00551032\t0.00548672\t0.0054296\t0.00534812\t0.00525659\t0.00516911\t0.00509451\t0.00503339\t0.0049785\t0.00491821\t0.0048414\t0.00474162\t0.0046189\t0.00447898\t0.00433075\t0.0041836\t0.00404563\t0.00392288\t0.00381898\t0.0037347\t0.00366768\t0.00361236\t0.00356078\t0.00350415\t0.00343512\t0.00335025\t0.00325188\t0.00314843\t0.00305237\t0.00297613\t0.00292727\t0.00290485\t0.00289875\t0.00289252\t0.00286916\t0.00281754\t0.00273713\t0.00263887\t0.00254148\t0.00246458\t0.00242115\t0.00241263\t0.00242844\t0.00244989\t0.00245669\t0.00243378\t0.00237641\t0.00229142\t0.00219443\t0.00210397\t0.0020351\t0.00199504\t0.00198242\t0.00198931\t0.00200474\t0.0020183\t0.00202279\t0.00201542\t0.00199779\t0.00197573\t0.00195963\t0.00196467\t0.00200995\t0.00211567\t0.00229938\t0.00257161\t0.00293117\t0.00336124\t0.00382961\t0.00429457\t0.00471482\t0.00505967\t0.00531591\t0.00548914\t0.00559932\t0.00567233\t0.00573054\t0.00578576\t0.00583691\t0.00587317\t0.00588091\t0.00585138\t0.00578585\t0.00569599\t0.00560002\t0.00551593\t0.00545539\t0.00542067\t0.00540589\t0.00540173\t0.00540136\t0.00540461\t0.00541858\t0.00545406\t0.00551948\t0.00561508\t0.00573011\t0.00584484\t0.00593668\t0.00598827\t0.00599412\t0.0059629\t0.0059146\t0.00587372\t0.00586082\t0.00588561\t0.0059439\t0.00601991\t0.00609337\t0.00614804\t0.00617788\t0.00618803\t0.00619042\t0.00619673\t0.0062118\t0.00623046\t0.00623921\t0.00622178\t0.00616671\t0.00607344\t0.00595428\t0.00583096\t0.00572722\t0.00566003\t0.00563295\t0.0056343\t0.00564131\t0.00562836\t0.00557592\t0.00547673\t0.0053373\t0.0051749\t0.00501156\t0.00486692\t0.0047523\t0.00466839\t0.00460739\t0.00455803\t0.00451024\t0.00445745\t0.00439655\t0.00432682\t0.00424851\t0.00416146\t0.00406437\t0.00395556\t0.00383522\t0.00370724\t0.00357882\t0.00345748\t0.00334743\t0.00324758\t0.00315209\t0.00305316\t0.00294475\t0.00282589\t0.00270213\t0.00258435\t0.00248483\t0.00241233\t0.00236789\t0.00234349\t0.0023242\t0.00229319\t0.00223775\t0.00215385\t0.00204748\t0.00193241\t0.00182514\t0.00173905\t0.00168008\t0.00164572\t0.0016269\t0.00161167\t0.00158931\t0.00155409\t0.00150743\t0.00145687\t0.00141145\t0.00137594\t0.00134843\t0.00132276\t0.00129321\t0.00125759\t0.00121795\t0.00117994\t0.00115146\t0.00114008\t0.00114978\t0.00117841\t0.00121718\t0.00125234\t0.00126905\t0.00125685\t0.00121485\t0.00115349\t0.00109103\t0.0010455\t0.00102713\t0.00103658\t0.00106784\t0.0011107\t0.00115247\t0.00118159\t0.00119239\t0.0011878\t0.00117838\t0.00117827\t0.00119986\t0.00124893\t0.00132234\t0.00140993\t0.00149941\t0.00158152\t0.00165365\t0.00172135\t0.00179753\t0.00189829\t0.00203596\t0.00221268\t0.00241902\t0.00263799\t0.00285116\t0.00304377\t0.0032077\t0.00334244\t0.00345391\t0.00355143\t0.00364406\t0.00373756\t0.00383298\t0.00392711\t0.00401431\t0.00408897\t0.00414781\t0.00419102\t0.004222\t0.00424607\t0.00426901\t0.00429588\t0.00433027\t0.00437381\t0.00442607\t0.00448481\t0.00454667\t0.00460767\t0.00466387\t0.00471204\t0.00475021\t0.0047782\t0.00479783\t0.00481274\t0.0048276\t0.00484702\t0.00487447\t0.00491139\t0.00495653\t0.00500559\t0.0050517\t0.00508696&quot;; 
+<a name="l74"><span class="ln">74   </span></a>        x = x.replace(&quot;\t&quot;, &quot;,&quot;); 
+<a name="l75"><span class="ln">75   </span></a>        String [] ary = x.split(&quot;,&quot;); 
+<a name="l76"><span class="ln">76   </span></a>        Log.v(&quot;bluetooth _x&quot;, x); 
+<a name="l77"><span class="ln">77   </span></a>        Log.v(&quot;bluetooth _length: &quot;, ary.length + &quot;&quot;); 
+<a name="l78"><span class="ln">78   </span></a>        */</span><span class="s1"> 
+<a name="l79"><span class="ln">79   </span></a> 
+<a name="l80"><span class="ln">80   </span></a>        </span><span class="s3">// TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l81"><span class="ln">81   </span></a>        </span><span class="s3">// Create new instance from bluetoothApi if it null</span><span class="s1"> 
+<a name="l82"><span class="ln">82   </span></a></span><span class="s3">//        if (bluetoothAPI == null){</span><span class="s1"> 
+<a name="l83"><span class="ln">83   </span></a></span><span class="s3">//            bluetoothAPI = new SWS_P3API(this, mContext);</span><span class="s1"> 
+<a name="l84"><span class="ln">84   </span></a></span><span class="s3">//        }</span><span class="s1"> 
+<a name="l85"><span class="ln">85   </span></a></span><span class="s3">//</span><span class="s1"> 
+<a name="l86"><span class="ln">86   </span></a>        bluetoothBoard = contentView.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.board_bluetooth); 
+<a name="l87"><span class="ln">87   </span></a>        initBluetoothArea(); 
+<a name="l88"><span class="ln">88   </span></a> 
+<a name="l89"><span class="ln">89   </span></a>        </span><span class="s3">//Navigation Drawer</span><span class="s1"> 
+<a name="l90"><span class="ln">90   </span></a>        drawer = findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.drawer_layout); 
+<a name="l91"><span class="ln">91   </span></a>        drawer.addView(contentView, </span><span class="s4">0</span><span class="s1">); 
+<a name="l92"><span class="ln">92   </span></a></span><span class="s3">//        user.getUserModules(this);</span><span class="s1"> 
+<a name="l93"><span class="ln">93   </span></a>        </span><span class="s3">//  initialize the FirebaseAuth instance.</span><span class="s1"> 
+<a name="l94"><span class="ln">94   </span></a>        mAuth = FirebaseAuth.getInstance(); 
+<a name="l95"><span class="ln">95   </span></a> 
+<a name="l96"><span class="ln">96   </span></a>        </span><span class="s3">// Init views</span><span class="s1"> 
+<a name="l97"><span class="ln">97   </span></a>        initUIView(); 
+<a name="l98"><span class="ln">98   </span></a>        </span><span class="s0">try </span><span class="s1">{ 
+<a name="l99"><span class="ln">99   </span></a>            settings = myUser.getUserSettings().getCurrentUserSettings(</span><span class="s0">this</span><span class="s1">); 
+<a name="l100"><span class="ln">100  </span></a>            </span><span class="s3">// set the value of StorageSize</span><span class="s1"> 
+<a name="l101"><span class="ln">101  </span></a>            </span><span class="s0">if </span><span class="s1">(settings.isUseDefaultStorageSize()){ 
+<a name="l102"><span class="ln">102  </span></a>                useDefaultStorageSize.setChecked(</span><span class="s0">true</span><span class="s1">); 
+<a name="l103"><span class="ln">103  </span></a>                storageSize.setProgress(<a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">GlobalVariables</a>.defaultStorageSize); 
+<a name="l104"><span class="ln">104  </span></a>                storageSize.setEnabled(</span><span class="s0">false</span><span class="s1">); 
+<a name="l105"><span class="ln">105  </span></a>            }</span><span class="s0">else </span><span class="s1">{ 
+<a name="l106"><span class="ln">106  </span></a>                useDefaultStorageSize.setChecked(</span><span class="s0">false</span><span class="s1">); 
+<a name="l107"><span class="ln">107  </span></a>                storageSize.setProgress(settings.getStorageSize()); 
+<a name="l108"><span class="ln">108  </span></a>                storageSize.setEnabled(</span><span class="s0">true</span><span class="s1">); 
+<a name="l109"><span class="ln">109  </span></a>            } 
+<a name="l110"><span class="ln">110  </span></a> 
+<a name="l111"><span class="ln">111  </span></a>            </span><span class="s3">// set Value of capture Image</span><span class="s1">
+<a name="l112"><span class="ln">112  </span></a>            <a href="../../../../com/si_ware/neospectra/Models/dbSettings.java.html">dbSettings.captureImage</a> ci = settings.getDefaultCaptureState();
+<a name="l113"><span class="ln">113  </span></a>            RadioButton rb = </span><span class="s0">null</span><span class="s1">;
+<a name="l114"><span class="ln">114  </span></a>            </span><span class="s3">// get the Radio Button View</span><span class="s1">
+<a name="l115"><span class="ln">115  </span></a>            </span><span class="s0">switch </span><span class="s1">(ci){
+<a name="l116"><span class="ln">116  </span></a>                </span><span class="s0">case </span><span class="s1">Take_Images:
+<a name="l117"><span class="ln">117  </span></a>                    rb = findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.rb_take_image);
+<a name="l118"><span class="ln">118  </span></a>                    </span><span class="s0">break</span><span class="s1">;
+<a name="l119"><span class="ln">119  </span></a>                </span><span class="s0">case </span><span class="s1">Ask_Every_time:
+<a name="l120"><span class="ln">120  </span></a>                    rb = findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.rb_ask);
+<a name="l121"><span class="ln">121  </span></a>                    </span><span class="s0">break</span><span class="s1">;
+<a name="l122"><span class="ln">122  </span></a>                </span><span class="s0">case </span><span class="s1">Dont_take_image:
+<a name="l123"><span class="ln">123  </span></a>                    rb = findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.rb_dont_take_image);
+<a name="l124"><span class="ln">124  </span></a>                    </span><span class="s0">break</span><span class="s1">;
+<a name="l125"><span class="ln">125  </span></a>            }
+<a name="l126"><span class="ln">126  </span></a>            </span><span class="s3">// Set the value of Radio Button</span><span class="s1">
+<a name="l127"><span class="ln">127  </span></a>            rb.setChecked(</span><span class="s0">true</span><span class="s1">);
+<a name="l128"><span class="ln">128  </span></a>        }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+<a name="l129"><span class="ln">129  </span></a>            logMessage(TAG, e.getMessage()); 
+<a name="l130"><span class="ln">130  </span></a>        } 
+<a name="l131"><span class="ln">131  </span></a> 
+<a name="l132"><span class="ln">132  </span></a>    } 
+<a name="l133"><span class="ln">133  </span></a> 
+<a name="l134"><span class="ln">134  </span></a>    </span><span class="s0">private void </span><span class="s1">initBluetoothArea() { 
+<a name="l135"><span class="ln">135  </span></a>        </span><span class="s3">// Bluetooth board</span><span class="s1"> 
+<a name="l136"><span class="ln">136  </span></a>        tbEnableBluetooth = bluetoothBoard.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.tb_toggle_bluetooth); 
+<a name="l137"><span class="ln">137  </span></a>        btnBluetoothSearch = bluetoothBoard.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.btn_bluetooth_scan); 
+<a name="l138"><span class="ln">138  </span></a>        tvStatus = bluetoothBoard.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.tv_status); 
+<a name="l139"><span class="ln">139  </span></a>        pbSearching = bluetoothBoard.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.pb_bluetooth_scanning); 
+<a name="l140"><span class="ln">140  </span></a>        </span><span class="s3">// Start the progressBar rotation if the pb is visible</span><span class="s1"> 
+<a name="l141"><span class="ln">141  </span></a>        </span><span class="s0">if </span><span class="s1">(pbSearching.getVisibility() == View.VISIBLE) rotateProgressBar(SettingsActivity.</span><span class="s0">this</span><span class="s1">, pbSearching); 
+<a name="l142"><span class="ln">142  </span></a>        rvDevices = bluetoothBoard.findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.rv_bluetooth_devices); 
+<a name="l143"><span class="ln">143  </span></a>        </span><span class="s3">// the recycler view is hidden by default</span><span class="s1"> 
+<a name="l144"><span class="ln">144  </span></a>        rvDevices.setVisibility(View.INVISIBLE); 
+<a name="l145"><span class="ln">145  </span></a> 
+<a name="l146"><span class="ln">146  </span></a>        </span><span class="s3">// ========== Backdoor to testing activities ================= //</span><span class="s1"> 
+<a name="l147"><span class="ln">147  </span></a>        tvStatus.setOnLongClickListener(</span><span class="s0">new </span><span class="s1">View.OnLongClickListener() { 
+<a name="l148"><span class="ln">148  </span></a>            @Override 
+<a name="l149"><span class="ln">149  </span></a>            </span><span class="s0">public boolean </span><span class="s1">onLongClick(View view) { 
+<a name="l150"><span class="ln">150  </span></a></span><span class="s3">// TODO: 7/27/2018 JavaDoc </span><span class="s1"> 
+<a name="l151"><span class="ln">151  </span></a>                </span><span class="s3">//                Intent iTesting = new Intent(SettingsActivity.this, NeoSpectraBTDemo.class);</span><span class="s1"> 
+<a name="l152"><span class="ln">152  </span></a></span><span class="s3">//                startActivity(iTesting);</span><span class="s1"> 
+<a name="l153"><span class="ln">153  </span></a>                </span><span class="s0">return true</span><span class="s1">; 
+<a name="l154"><span class="ln">154  </span></a>            } 
+<a name="l155"><span class="ln">155  </span></a>        }); 
+<a name="l156"><span class="ln">156  </span></a>    } 
+<a name="l157"><span class="ln">157  </span></a> 
+<a name="l158"><span class="ln">158  </span></a>    </span><span class="s0">private void </span><span class="s1">initListeners() { 
+<a name="l159"><span class="ln">159  </span></a>        </span><span class="s3">// TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l160"><span class="ln">160  </span></a>        </span><span class="s3">/* 
+<a name="l161"><span class="ln">161  </span></a>        while (bluetoothAPI == null){ 
+<a name="l162"><span class="ln">162  </span></a>            logMessage(TAG, &quot;Initializing bluetooth API ...&quot;); 
+<a name="l163"><span class="ln">163  </span></a>        } 
+<a name="l164"><span class="ln">164  </span></a>        tbEnableBluetooth.setOnCheckedChangeListener((buttonView, isChecked) -&gt; { 
+<a name="l165"><span class="ln">165  </span></a>            // Exit if the api not ready 
+<a name="l166"><span class="ln">166  </span></a>            if (bluetoothAPI == null){ 
+<a name="l167"><span class="ln">167  </span></a>                logMessage(TAG, &quot;Bluetooth API not ready yet, tbEnableBluetooth.setOnCheckedChangeListener&quot;); 
+<a name="l168"><span class="ln">168  </span></a>                return; 
+<a name="l169"><span class="ln">169  </span></a>            } 
+<a name="l170"><span class="ln">170  </span></a>            if (isChecked) { 
+<a name="l171"><span class="ln">171  </span></a>                // ask the user to enable the location as well 
+<a name="l172"><span class="ln">172  </span></a>//                bluetoothAPI.getLocationPermissions(); 
+<a name="l173"><span class="ln">173  </span></a>//                 Bluetooth is disabled .. enable it 
+<a name="l174"><span class="ln">174  </span></a>                Intent mEnBT = bluetoothAPI.enableBluetooth(); 
+<a name="l175"><span class="ln">175  </span></a>                int REQUEST_ENABLE_BT = 1; 
+<a name="l176"><span class="ln">176  </span></a>                startActivityForResult(mEnBT, REQUEST_ENABLE_BT); 
+<a name="l177"><span class="ln">177  </span></a>            } else { 
+<a name="l178"><span class="ln">178  </span></a>                // Bluetooth is enabled .. disable it 
+<a name="l179"><span class="ln">179  </span></a>                bluetoothAPI.disconnectFromDevice(); 
+<a name="l180"><span class="ln">180  </span></a>                bluetoothAPI.disableBluetooth(); 
+<a name="l181"><span class="ln">181  </span></a>                pbSearching.setVisibility(View.GONE); 
+<a name="l182"><span class="ln">182  </span></a>                tvStatus.setText(mContext.getResources().getString(R.string.ready)); 
+<a name="l183"><span class="ln">183  </span></a>            } 
+<a name="l184"><span class="ln">184  </span></a>            updateSearchButtonStatus(); 
+<a name="l185"><span class="ln">185  </span></a>        }); 
+<a name="l186"><span class="ln">186  </span></a> 
+<a name="l187"><span class="ln">187  </span></a>        btnBluetoothSearch.setOnClickListener(v -&gt; { 
+<a name="l188"><span class="ln">188  </span></a>            tvStatus.setText(mContext.getResources().getString(R.string.bluetooth_scan)); 
+<a name="l189"><span class="ln">189  </span></a>            pbSearching.setVisibility(View.VISIBLE); 
+<a name="l190"><span class="ln">190  </span></a>            rotateProgressBar(mContext, pbSearching); 
+<a name="l191"><span class="ln">191  </span></a>            // scan for BT devices 
+<a name="l192"><span class="ln">192  </span></a>            //while (mBTDeviceList.size() == 0){ 
+<a name="l193"><span class="ln">193  </span></a>            bleDevices = bluetoothAPI.scanAvailableDevices(); 
+<a name="l194"><span class="ln">194  </span></a>            if (bleDevices.size() &lt; 1) 
+<a name="l195"><span class="ln">195  </span></a>                return; 
+<a name="l196"><span class="ln">196  </span></a>            Toast.makeText(mContext, &quot;Got device&quot;, Toast.LENGTH_SHORT).show(); 
+<a name="l197"><span class="ln">197  </span></a>            displayDevices(&quot;Searching button&quot;, bleDevices); 
+<a name="l198"><span class="ln">198  </span></a>        }); 
+<a name="l199"><span class="ln">199  </span></a>    */</span><span class="s1"> 
+<a name="l200"><span class="ln">200  </span></a>    } 
+<a name="l201"><span class="ln">201  </span></a> 
+<a name="l202"><span class="ln">202  </span></a></span><span class="s3">//    private void displayDevices(String from, List&lt;SWS_P3BLEDevice&gt; devices) {</span><span class="s1"> 
+<a name="l203"><span class="ln">203  </span></a></span><span class="s3">//        logMessage(&quot;bluetooth&quot;, &quot;Displaying devices from: &quot; + from);</span><span class="s1"> 
+<a name="l204"><span class="ln">204  </span></a></span><span class="s3">//        if (devices.size() &lt; 1)</span><span class="s1"> 
+<a name="l205"><span class="ln">205  </span></a></span><span class="s3">//            return;</span><span class="s1"> 
+<a name="l206"><span class="ln">206  </span></a></span><span class="s3">//        rvDevices.setVisibility(View.VISIBLE);</span><span class="s1"> 
+<a name="l207"><span class="ln">207  </span></a></span><span class="s3">//        // Set the recyclerView Adapter</span><span class="s1"> 
+<a name="l208"><span class="ln">208  </span></a></span><span class="s3">//        rvDevices.setLayoutManager(new LinearLayoutManager(this));</span><span class="s1"> 
+<a name="l209"><span class="ln">209  </span></a></span><span class="s3">//        rvDevices.setAdapter(adapter);</span><span class="s1"> 
+<a name="l210"><span class="ln">210  </span></a></span><span class="s3">//        adapter = new SensorsAdapter(this, devices);</span><span class="s1"> 
+<a name="l211"><span class="ln">211  </span></a></span><span class="s3">//        pbSearching.setVisibility(View.INVISIBLE);</span><span class="s1"> 
+<a name="l212"><span class="ln">212  </span></a></span><span class="s3">//        tvStatus.setText(mContext.getResources().getString(R.string.bluetooth_found_devices));</span><span class="s1"> 
+<a name="l213"><span class="ln">213  </span></a></span><span class="s3">//        logMessage(&quot;bluetooth&quot;, &quot;displaying Done, length equals: &quot; + devices.size());</span><span class="s1"> 
+<a name="l214"><span class="ln">214  </span></a></span><span class="s3">//    }</span><span class="s1"> 
+<a name="l215"><span class="ln">215  </span></a> 
+<a name="l216"><span class="ln">216  </span></a></span><span class="s3">//    private void updateSearchButtonStatus() {</span><span class="s1"> 
+<a name="l217"><span class="ln">217  </span></a></span><span class="s3">//        isBluetoothEnabled = bluetoothAPI.isBluetoothEnabled();</span><span class="s1"> 
+<a name="l218"><span class="ln">218  </span></a></span><span class="s3">//        isLocationEnabled = bluetoothAPI.isLocationEnabled(mContext);</span><span class="s1"> 
+<a name="l219"><span class="ln">219  </span></a></span><span class="s3">//</span><span class="s1"> 
+<a name="l220"><span class="ln">220  </span></a></span><span class="s3">//        Log.d(&quot;bluetooth&quot;, &quot;Bluetooth status is: &quot; + isBluetoothEnabled +</span><span class="s1"> 
+<a name="l221"><span class="ln">221  </span></a></span><span class="s3">//        &quot; Location service is: &quot; + isLocationEnabled);</span><span class="s1"> 
+<a name="l222"><span class="ln">222  </span></a></span><span class="s3">//</span><span class="s1"> 
+<a name="l223"><span class="ln">223  </span></a></span><span class="s3">//        // Only enable the search button if the location and bluetooth are enabled</span><span class="s1"> 
+<a name="l224"><span class="ln">224  </span></a></span><span class="s3">//        if (isBluetoothEnabled &amp;&amp; isLocationEnabled){</span><span class="s1"> 
+<a name="l225"><span class="ln">225  </span></a></span><span class="s3">//            btnBluetoothSearch.setEnabled(true);</span><span class="s1"> 
+<a name="l226"><span class="ln">226  </span></a></span><span class="s3">//        }else {</span><span class="s1"> 
+<a name="l227"><span class="ln">227  </span></a></span><span class="s3">//            btnBluetoothSearch.setEnabled(false);</span><span class="s1"> 
+<a name="l228"><span class="ln">228  </span></a></span><span class="s3">//        }</span><span class="s1"> 
+<a name="l229"><span class="ln">229  </span></a></span><span class="s3">//    }</span><span class="s1"> 
+<a name="l230"><span class="ln">230  </span></a> 
+<a name="l231"><span class="ln">231  </span></a>    </span><span class="s0">private void </span><span class="s1">initUIView() { 
+<a name="l232"><span class="ln">232  </span></a> 
+<a name="l233"><span class="ln">233  </span></a></span><span class="s3">//        storageValue = findViewById(R.id.tv_value);</span><span class="s1"> 
+<a name="l234"><span class="ln">234  </span></a> 
+<a name="l235"><span class="ln">235  </span></a>        </span><span class="s3">// Seek bar</span><span class="s1"> 
+<a name="l236"><span class="ln">236  </span></a>        storageSize = findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.sb_storage_size); 
+<a name="l237"><span class="ln">237  </span></a>        </span><span class="s3">// Check box</span><span class="s1"> 
+<a name="l238"><span class="ln">238  </span></a>        useDefaultStorageSize = findViewById(<a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a>.cb_default_storage_size); 
+<a name="l239"><span class="ln">239  </span></a> 
+<a name="l240"><span class="ln">240  </span></a>        storageSize.setOnSeekBarChangeListener(</span><span class="s0">new </span><span class="s1">SeekBar.OnSeekBarChangeListener() { 
+<a name="l241"><span class="ln">241  </span></a> 
+<a name="l242"><span class="ln">242  </span></a>            @Override 
+<a name="l243"><span class="ln">243  </span></a>            </span><span class="s0">public void </span><span class="s1">onStopTrackingTouch(SeekBar seekBar) { 
+<a name="l244"><span class="ln">244  </span></a>            } 
+<a name="l245"><span class="ln">245  </span></a> 
+<a name="l246"><span class="ln">246  </span></a>            @Override 
+<a name="l247"><span class="ln">247  </span></a>            </span><span class="s0">public void </span><span class="s1">onStartTrackingTouch(SeekBar seekBar) { 
+<a name="l248"><span class="ln">248  </span></a>            } 
+<a name="l249"><span class="ln">249  </span></a> 
+<a name="l250"><span class="ln">250  </span></a>            @Override 
+<a name="l251"><span class="ln">251  </span></a>            </span><span class="s0">public void </span><span class="s1">onProgressChanged(@NonNull SeekBar seekBar, </span><span class="s0">int </span><span class="s1">progress, </span><span class="s0">boolean </span><span class="s1">fromUser) { 
+<a name="l252"><span class="ln">252  </span></a>                </span><span class="s3">// Set the value of storage size to the settings object to be saved later in the</span><span class="s1"> 
+<a name="l253"><span class="ln">253  </span></a>                </span><span class="s3">// shared pref.</span><span class="s1"> 
+<a name="l254"><span class="ln">254  </span></a>                </span><span class="s0">if </span><span class="s1">(settings == </span><span class="s0">null</span><span class="s1">){ 
+<a name="l255"><span class="ln">255  </span></a>                    </span><span class="s0">if </span><span class="s1">(myUser == </span><span class="s0">null</span><span class="s1">){ 
+<a name="l256"><span class="ln">256  </span></a>                        logMessage(TAG, </span><span class="s2">&quot;User object is null&quot;</span><span class="s1">); 
+<a name="l257"><span class="ln">257  </span></a>                        </span><span class="s0">return</span><span class="s1">; 
+<a name="l258"><span class="ln">258  </span></a>                    } 
+<a name="l259"><span class="ln">259  </span></a>                    settings = myUser.getUserSettings().getCurrentUserSettings(mContext); 
+<a name="l260"><span class="ln">260  </span></a>                } 
+<a name="l261"><span class="ln">261  </span></a>                settings.setStorageSize(progress); 
+<a name="l262"><span class="ln">262  </span></a> 
+<a name="l263"><span class="ln">263  </span></a>                </span><span class="s3">/* 
+<a name="l264"><span class="ln">264  </span></a>                int value = progress; //this is the value of the progress bar (1-100) 
+<a name="l265"><span class="ln">265  </span></a>                //value = progress; //this should also work 
+<a name="l266"><span class="ln">266  </span></a>                String valueString = value + &quot; MB&quot;; //this is the string that will be put above the slider 
+<a name="l267"><span class="ln">267  </span></a>                storageValue.setText(valueString); 
+<a name="l268"><span class="ln">268  </span></a>                int val = (value * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax(); 
+<a name="l269"><span class="ln">269  </span></a>                storageValue.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2 - 50); 
+<a name="l270"><span class="ln">270  </span></a>                */</span><span class="s1"> 
+<a name="l271"><span class="ln">271  </span></a></span><span class="s3">//                seekBar.setThumb(writeOnDrawable(R.drawable.ic_small_circle, valueString));</span><span class="s1"> 
+<a name="l272"><span class="ln">272  </span></a>                seekBar.setThumb(getResources().getDrawable(<a href="../../../../com/si_ware/neospectra/R.java.html">R.drawable</a>.ic_small_circle)); 
+<a name="l273"><span class="ln">273  </span></a>                Log.v(TAG, </span><span class="s2">&quot;Ay 7aga&quot;</span><span class="s1">); 
+<a name="l274"><span class="ln">274  </span></a>            } 
+<a name="l275"><span class="ln">275  </span></a>        }); 
+<a name="l276"><span class="ln">276  </span></a>    } 
+<a name="l277"><span class="ln">277  </span></a> 
+<a name="l278"><span class="ln">278  </span></a>    @Override 
+<a name="l279"><span class="ln">279  </span></a>    </span><span class="s0">protected void </span><span class="s1">onDestroy() { 
+<a name="l280"><span class="ln">280  </span></a>        </span><span class="s0">super</span><span class="s1">.onDestroy(); 
+<a name="l281"><span class="ln">281  </span></a>        </span><span class="s3">// TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l282"><span class="ln">282  </span></a>        </span><span class="s3">//Disconnect the device before exit from the application</span><span class="s1"> 
+<a name="l283"><span class="ln">283  </span></a></span><span class="s3">//        if (bluetoothAPI != null) bluetoothAPI.disconnectFromDevice();</span><span class="s1"> 
+<a name="l284"><span class="ln">284  </span></a>    } 
+<a name="l285"><span class="ln">285  </span></a> 
+<a name="l286"><span class="ln">286  </span></a>    </span><span class="s0">private </span><span class="s1">BitmapDrawable writeOnDrawable(</span><span class="s0">int </span><span class="s1">drawableId, @NonNull String text){ 
+<a name="l287"><span class="ln">287  </span></a> 
+<a name="l288"><span class="ln">288  </span></a>        BitmapFactory.Options options = </span><span class="s0">new </span><span class="s1">BitmapFactory.Options(); 
+<a name="l289"><span class="ln">289  </span></a>        options.inScaled = </span><span class="s0">false</span><span class="s1">; 
+<a name="l290"><span class="ln">290  </span></a></span><span class="s3">//        Bitmap bm = BitmapFactory.decodeResource(getResources(), drawableId, options).copy(Bitmap.Config.ARGB_8888, true);</span><span class="s1"> 
+<a name="l291"><span class="ln">291  </span></a> 
+<a name="l292"><span class="ln">292  </span></a>        Bitmap bmp1 = BitmapFactory.decodeResource(</span><span class="s0">this</span><span class="s1">.getResources(), drawableId); 
+<a name="l293"><span class="ln">293  </span></a>        </span><span class="s3">//then create a copy of bitmap bmp1 into bmp2</span><span class="s1"> 
+<a name="l294"><span class="ln">294  </span></a>        Bitmap bm = bmp1.copy(bmp1.getConfig(), </span><span class="s0">true</span><span class="s1">); 
+<a name="l295"><span class="ln">295  </span></a> 
+<a name="l296"><span class="ln">296  </span></a>        </span><span class="s0">if</span><span class="s1">(paint == </span><span class="s0">null</span><span class="s1">){ 
+<a name="l297"><span class="ln">297  </span></a>            paint = </span><span class="s0">new </span><span class="s1">Paint(Paint.ANTI_ALIAS_FLAG); 
+<a name="l298"><span class="ln">298  </span></a>        } 
+<a name="l299"><span class="ln">299  </span></a>        paint.setStyle(Paint.Style.FILL); 
+<a name="l300"><span class="ln">300  </span></a>        paint.setColor(getResources().getColor(<a href="../../../../com/si_ware/neospectra/R.java.html">R.color</a>.grey)); </span><span class="s3">//Change this if you want other color of text</span><span class="s1"> 
+<a name="l301"><span class="ln">301  </span></a>        paint.setTextSize(</span><span class="s4">30</span><span class="s1">); </span><span class="s3">//Change this if you want bigger/smaller font</span><span class="s1"> 
+<a name="l302"><span class="ln">302  </span></a> 
+<a name="l303"><span class="ln">303  </span></a>        Canvas canvas = </span><span class="s0">new </span><span class="s1">Canvas(bm); 
+<a name="l304"><span class="ln">304  </span></a>        canvas.drawText(text, </span><span class="s4">10</span><span class="s1">, bm.getHeight()/</span><span class="s4">4</span><span class="s1">, paint); </span><span class="s3">//Change the position of the text here</span><span class="s1"> 
+<a name="l305"><span class="ln">305  </span></a> 
+<a name="l306"><span class="ln">306  </span></a>        </span><span class="s0">return new </span><span class="s1">BitmapDrawable(getResources(), bm); 
+<a name="l307"><span class="ln">307  </span></a>    } 
+<a name="l308"><span class="ln">308  </span></a> 
+<a name="l309"><span class="ln">309  </span></a>    @Override 
+<a name="l310"><span class="ln">310  </span></a>    </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+<a name="l311"><span class="ln">311  </span></a> 
+<a name="l312"><span class="ln">312  </span></a>    } 
+<a name="l313"><span class="ln">313  </span></a> 
+<a name="l314"><span class="ln">314  </span></a>    @Override 
+<a name="l315"><span class="ln">315  </span></a>    </span><span class="s0">public void </span><span class="s1">onBackPressed() { 
+<a name="l316"><span class="ln">316  </span></a>        </span><span class="s0">super</span><span class="s1">.onBackPressed(); 
+<a name="l317"><span class="ln">317  </span></a>        Intent iMain = </span><span class="s0">new </span><span class="s1">Intent(SettingsActivity.</span><span class="s0">this</span><span class="s1">, <a href="../../../../com/si_ware/neospectra/Activities/MainActivity.java.html">MainActivity</a>.</span><span class="s0">class</span><span class="s1">); 
+<a name="l318"><span class="ln">318  </span></a>        iMain.putExtra(</span><span class="s2">&quot;goto&quot;</span><span class="s1">, GOTO_FRAGMENT_SCAN); 
+<a name="l319"><span class="ln">319  </span></a>        startActivity(iMain); 
+<a name="l320"><span class="ln">320  </span></a>    } 
+<a name="l321"><span class="ln">321  </span></a> 
+<a name="l322"><span class="ln">322  </span></a>    </span><span class="s0">public void </span><span class="s1">captureState(@NonNull View view) { 
+<a name="l323"><span class="ln">323  </span></a>        </span><span class="s0">int </span><span class="s1">id = view.getId(); 
+<a name="l324"><span class="ln">324  </span></a>        </span><span class="s0">switch </span><span class="s1">(id){ 
+<a name="l325"><span class="ln">325  </span></a>            </span><span class="s0">case <a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a></span><span class="s1">.rb_ask: 
+<a name="l326"><span class="ln">326  </span></a>                settings.setDefaultCaptureState(<a href="../../../../com/si_ware/neospectra/Models/dbSettings.java.html">dbSettings.captureImage</a>.Ask_Every_time); 
+<a name="l327"><span class="ln">327  </span></a>                </span><span class="s0">break</span><span class="s1">; 
+<a name="l328"><span class="ln">328  </span></a>            </span><span class="s0">case <a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a></span><span class="s1">.rb_take_image: 
+<a name="l329"><span class="ln">329  </span></a>                settings.setDefaultCaptureState(<a href="../../../../com/si_ware/neospectra/Models/dbSettings.java.html">dbSettings.captureImage</a>.Take_Images); 
+<a name="l330"><span class="ln">330  </span></a>                </span><span class="s0">break</span><span class="s1">; 
+<a name="l331"><span class="ln">331  </span></a>            </span><span class="s0">case <a href="../../../../com/si_ware/neospectra/R.java.html">R.id</a></span><span class="s1">.rb_dont_take_image: 
+<a name="l332"><span class="ln">332  </span></a>                settings.setDefaultCaptureState(<a href="../../../../com/si_ware/neospectra/Models/dbSettings.java.html">dbSettings.captureImage</a>.Dont_take_image); 
+<a name="l333"><span class="ln">333  </span></a>        } 
+<a name="l334"><span class="ln">334  </span></a>    } 
+<a name="l335"><span class="ln">335  </span></a> 
+<a name="l336"><span class="ln">336  </span></a>    @Override 
+<a name="l337"><span class="ln">337  </span></a>    </span><span class="s0">protected void </span><span class="s1">onResume() { 
+<a name="l338"><span class="ln">338  </span></a>        </span><span class="s0">super</span><span class="s1">.onResume(); 
+<a name="l339"><span class="ln">339  </span></a> 
+<a name="l340"><span class="ln">340  </span></a>        </span><span class="s3">// TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l341"><span class="ln">341  </span></a>        </span><span class="s3">/* 
+<a name="l342"><span class="ln">342  </span></a>        // -------------------------------------------------------------------------------- 
+<a name="l343"><span class="ln">343  </span></a>        // Request Permission for loacation 
+<a name="l344"><span class="ln">344  </span></a>        if (ContextCompat.checkSelfPermission(this, 
+<a name="l345"><span class="ln">345  </span></a>                Manifest.permission.ACCESS_FINE_LOCATION) 
+<a name="l346"><span class="ln">346  </span></a>                != PackageManager.PERMISSION_GRANTED 
+<a name="l347"><span class="ln">347  </span></a>                &amp;&amp; 
+<a name="l348"><span class="ln">348  </span></a>                ContextCompat.checkSelfPermission(this, 
+<a name="l349"><span class="ln">349  </span></a>                        Manifest.permission.ACCESS_COARSE_LOCATION) 
+<a name="l350"><span class="ln">350  </span></a>                        != PackageManager.PERMISSION_GRANTED) { 
+<a name="l351"><span class="ln">351  </span></a>            bluetoothAPI.getLocationPermissions(); 
+<a name="l352"><span class="ln">352  </span></a>        } 
+<a name="l353"><span class="ln">353  </span></a> 
+<a name="l354"><span class="ln">354  </span></a>        // Update the flags of bluetooth and location 
+<a name="l355"><span class="ln">355  </span></a>        getCurrentStatusOfLocationAndBluetooth(); 
+<a name="l356"><span class="ln">356  </span></a>        initListeners(); 
+<a name="l357"><span class="ln">357  </span></a>        // Update the status of search button 
+<a name="l358"><span class="ln">358  </span></a>        updateSearchButtonStatus(); 
+<a name="l359"><span class="ln">359  </span></a>//        changeX(TAG, storageValue, storageSize); 
+<a name="l360"><span class="ln">360  </span></a>        //Display the current device if it is found 
+<a name="l361"><span class="ln">361  </span></a>        if (currentConnectedDevice != null){ 
+<a name="l362"><span class="ln">362  </span></a>            logMessage(&quot;bluetooth&quot;, &quot;Current device found&quot;); 
+<a name="l363"><span class="ln">363  </span></a>            List&lt;SWS_P3BLEDevice&gt; mDevices = new ArrayList&lt;&gt;(); 
+<a name="l364"><span class="ln">364  </span></a>            mDevices.add(currentConnectedDevice); 
+<a name="l365"><span class="ln">365  </span></a>            displayDevices(&quot;OnResume&quot;, mDevices); 
+<a name="l366"><span class="ln">366  </span></a>        } 
+<a name="l367"><span class="ln">367  </span></a>        */</span><span class="s1"> 
+<a name="l368"><span class="ln">368  </span></a>    } 
+<a name="l369"><span class="ln">369  </span></a> 
+<a name="l370"><span class="ln">370  </span></a></span><span class="s3">//    private void getCurrentStatusOfLocationAndBluetooth() {</span><span class="s1"> 
+<a name="l371"><span class="ln">371  </span></a></span><span class="s3">//        isBluetoothEnabled = getBluetoothStatus();</span><span class="s1"> 
+<a name="l372"><span class="ln">372  </span></a></span><span class="s3">//        tbEnableBluetooth.setChecked(isBluetoothEnabled);</span><span class="s1"> 
+<a name="l373"><span class="ln">373  </span></a></span><span class="s3">//        isLocationEnabled = getLocationStatus();</span><span class="s1"> 
+<a name="l374"><span class="ln">374  </span></a></span><span class="s3">//    }</span><span class="s1"> 
+<a name="l375"><span class="ln">375  </span></a> 
+<a name="l376"><span class="ln">376  </span></a></span><span class="s3">//    private boolean getLocationStatus() {</span><span class="s1"> 
+<a name="l377"><span class="ln">377  </span></a></span><span class="s3">//        return bluetoothAPI.isLocationEnabled(mContext);</span><span class="s1"> 
+<a name="l378"><span class="ln">378  </span></a></span><span class="s3">//    }</span><span class="s1"> 
+<a name="l379"><span class="ln">379  </span></a></span><span class="s3">//</span><span class="s1"> 
+<a name="l380"><span class="ln">380  </span></a></span><span class="s3">//    private boolean getBluetoothStatus() {</span><span class="s1"> 
+<a name="l381"><span class="ln">381  </span></a></span><span class="s3">//        return bluetoothAPI.isBluetoothEnabled();</span><span class="s1"> 
+<a name="l382"><span class="ln">382  </span></a></span><span class="s3">//    }</span><span class="s1"> 
+<a name="l383"><span class="ln">383  </span></a> 
+<a name="l384"><span class="ln">384  </span></a>    @Override 
+<a name="l385"><span class="ln">385  </span></a>    </span><span class="s0">protected void </span><span class="s1">onPause() { 
+<a name="l386"><span class="ln">386  </span></a>        </span><span class="s0">super</span><span class="s1">.onPause(); 
+<a name="l387"><span class="ln">387  </span></a>        </span><span class="s0">try </span><span class="s1">{ 
+<a name="l388"><span class="ln">388  </span></a>            </span><span class="s3">// Save the setting to Shared preferences before exit from the activity</span><span class="s1"> 
+<a name="l389"><span class="ln">389  </span></a>            settings.saveUserSettings(</span><span class="s0">this</span><span class="s1">); 
+<a name="l390"><span class="ln">390  </span></a>        }</span><span class="s0">catch </span><span class="s1">(Exception e){ 
+<a name="l391"><span class="ln">391  </span></a>            logMessage(TAG, e.getMessage()); 
+<a name="l392"><span class="ln">392  </span></a>        } 
+<a name="l393"><span class="ln">393  </span></a>    } 
+<a name="l394"><span class="ln">394  </span></a> 
+<a name="l395"><span class="ln">395  </span></a>    </span><span class="s0">public void </span><span class="s1">defaultSaveResults(View view) { 
+<a name="l396"><span class="ln">396  </span></a>        settings.setUseDefaultStorageSize(useDefaultStorageSize.isChecked()); 
+<a name="l397"><span class="ln">397  </span></a>        </span><span class="s0">if </span><span class="s1">(useDefaultStorageSize.isChecked()){ 
+<a name="l398"><span class="ln">398  </span></a>            storageSize.setProgress(<a href="../../../../com/si_ware/neospectra/Global/GlobalVariables.java.html">GlobalVariables</a>.defaultStorageSize); 
+<a name="l399"><span class="ln">399  </span></a>            storageSize.setEnabled(</span><span class="s0">false</span><span class="s1">); 
+<a name="l400"><span class="ln">400  </span></a>        }</span><span class="s0">else </span><span class="s1">{ 
+<a name="l401"><span class="ln">401  </span></a>            storageSize.setProgress(settings.getStorageSize()); 
+<a name="l402"><span class="ln">402  </span></a>            storageSize.setEnabled(</span><span class="s0">true</span><span class="s1">); 
+<a name="l403"><span class="ln">403  </span></a>        } 
+<a name="l404"><span class="ln">404  </span></a>    } 
+<a name="l405"><span class="ln">405  </span></a> 
+<a name="l406"><span class="ln">406  </span></a>    </span><span class="s3">/* 
+<a name="l407"><span class="ln">407  </span></a>    @Override 
+<a name="l408"><span class="ln">408  </span></a>    protected void onCreate(Bundle savedInstanceState) { 
+<a name="l409"><span class="ln">409  </span></a>        super.onCreate(savedInstanceState); 
+<a name="l410"><span class="ln">410  </span></a> 
+<a name="l411"><span class="ln">411  </span></a>        user = dbUser.getUserInstance(); 
+<a name="l412"><span class="ln">412  </span></a>        //  initialize the FirebaseAuth instance. 
+<a name="l413"><span class="ln">413  </span></a>        mAuth = FirebaseAuth.getInstance(); 
+<a name="l414"><span class="ln">414  </span></a>        //list of history length 
+<a name="l415"><span class="ln">415  </span></a>        historyLengthSpinner = new Integer[]{10, 15, 20, 25, 30}; 
+<a name="l416"><span class="ln">416  </span></a> 
+<a name="l417"><span class="ln">417  </span></a>        //Get modules names from the list of user modules and put it to the spinner array. 
+<a name="l418"><span class="ln">418  </span></a>        primaryModuleSpinner = new ArrayList&lt;&gt;(); 
+<a name="l419"><span class="ln">419  </span></a>        // TODO: 12/30/17 &quot;TESTING_LINE&quot; - Delete this line in the production 
+<a name="l420"><span class="ln">420  </span></a>        fillSpinnerWithModulesName(getTestingUserModules(this)); 
+<a name="l421"><span class="ln">421  </span></a> 
+<a name="l422"><span class="ln">422  </span></a>        //Navigation Drawer 
+<a name="l423"><span class="ln">423  </span></a>         drawer = findViewById(R.id.drawer_layout); 
+<a name="l424"><span class="ln">424  </span></a>        LayoutInflater inflater = (LayoutInflater) this 
+<a name="l425"><span class="ln">425  </span></a>                .getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+<a name="l426"><span class="ln">426  </span></a>        View contentView = inflater.inflate(R.layout.activity_settings, null, false); 
+<a name="l427"><span class="ln">427  </span></a> 
+<a name="l428"><span class="ln">428  </span></a>        // Primary module spinner 
+<a name="l429"><span class="ln">429  </span></a>        choosePrimaryModule = contentView 
+<a name="l430"><span class="ln">430  </span></a>                .findViewById(R.id.spnr_primary_module) 
+<a name="l431"><span class="ln">431  </span></a>                .findViewById(R.id.spnr_choose_module); 
+<a name="l432"><span class="ln">432  </span></a>        ArrayAdapter&lt;String&gt; chooseModuleAdapter = new ArrayAdapter&lt;&gt; 
+<a name="l433"><span class="ln">433  </span></a>                (this, android.R.layout.simple_spinner_item, primaryModuleSpinner); 
+<a name="l434"><span class="ln">434  </span></a>        chooseModuleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+<a name="l435"><span class="ln">435  </span></a>        choosePrimaryModule.setAdapter(chooseModuleAdapter); 
+<a name="l436"><span class="ln">436  </span></a>        choosePrimaryModule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { 
+<a name="l437"><span class="ln">437  </span></a>            @Override 
+<a name="l438"><span class="ln">438  </span></a>            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) { 
+<a name="l439"><span class="ln">439  </span></a>                dbSettings settings = new dbSettings(); 
+<a name="l440"><span class="ln">440  </span></a>                settings.setPrimaryModuleName(primaryModuleSpinner.get(position)); 
+<a name="l441"><span class="ln">441  </span></a>                user.setUserSettings(settings); 
+<a name="l442"><span class="ln">442  </span></a>                Toast.makeText(SettingsActivity.this, 
+<a name="l443"><span class="ln">443  </span></a>                        &quot;Primary module is: &quot; + user.getUserSettings().getPrimaryModuleName(), 
+<a name="l444"><span class="ln">444  </span></a>                        Toast.LENGTH_SHORT).show(); 
+<a name="l445"><span class="ln">445  </span></a>                Log.e(&quot;err&quot;, &quot;spinner item selected is: &quot; + primaryModuleSpinner.get(position)); 
+<a name="l446"><span class="ln">446  </span></a>            } 
+<a name="l447"><span class="ln">447  </span></a>            @Override 
+<a name="l448"><span class="ln">448  </span></a>            public void onNothingSelected(AdapterView&lt;?&gt; parent) { 
+<a name="l449"><span class="ln">449  </span></a>                Log.e(&quot;err&quot;, &quot;No item selected&quot;); 
+<a name="l450"><span class="ln">450  </span></a>            } 
+<a name="l451"><span class="ln">451  </span></a>        }); 
+<a name="l452"><span class="ln">452  </span></a> 
+<a name="l453"><span class="ln">453  </span></a>        // Spinner view = History length 
+<a name="l454"><span class="ln">454  </span></a>//        setHistoryLength = contentView.findViewById(R.id.spnr_history_length); 
+<a name="l455"><span class="ln">455  </span></a>        ArrayAdapter&lt;Integer&gt; setHistoryLengthAdapter = new ArrayAdapter&lt;&gt; 
+<a name="l456"><span class="ln">456  </span></a>                (this, android.R.layout.simple_spinner_item, historyLengthSpinner); 
+<a name="l457"><span class="ln">457  </span></a>        setHistoryLengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+<a name="l458"><span class="ln">458  </span></a>        setHistoryLength.setAdapter(setHistoryLengthAdapter); 
+<a name="l459"><span class="ln">459  </span></a>        setHistoryLength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { 
+<a name="l460"><span class="ln">460  </span></a>            @Override 
+<a name="l461"><span class="ln">461  </span></a>            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) { 
+<a name="l462"><span class="ln">462  </span></a>                user.setLengthOfHistory(historyLengthSpinner[position]); 
+<a name="l463"><span class="ln">463  </span></a>            } 
+<a name="l464"><span class="ln">464  </span></a>            @Override 
+<a name="l465"><span class="ln">465  </span></a>            public void onNothingSelected(AdapterView&lt;?&gt; parent) { 
+<a name="l466"><span class="ln">466  </span></a>            } 
+<a name="l467"><span class="ln">467  </span></a>        }); 
+<a name="l468"><span class="ln">468  </span></a>        drawer.addView(contentView, 0); 
+<a name="l469"><span class="ln">469  </span></a>        // status text view 
+<a name="l470"><span class="ln">470  </span></a>        mStatusTextView = findViewById(R.id.status); 
+<a name="l471"><span class="ln">471  </span></a>        // buttons, login and logout 
+<a name="l472"><span class="ln">472  </span></a>        btnLogIn = findViewById(R.id.sign_in_button); 
+<a name="l473"><span class="ln">473  </span></a>        btnLogOut = findViewById(R.id.sign_out_button); 
+<a name="l474"><span class="ln">474  </span></a>        // Button listeners 
+<a name="l475"><span class="ln">475  </span></a>        btnLogIn.setOnClickListener(this); 
+<a name="l476"><span class="ln">476  </span></a>        btnLogOut.setOnClickListener(this); 
+<a name="l477"><span class="ln">477  </span></a>        if (user.isUserLoggedIn()){ 
+<a name="l478"><span class="ln">478  </span></a>            btnLogIn.setVisibility(View.GONE); 
+<a name="l479"><span class="ln">479  </span></a>            btnLogOut.setVisibility(View.VISIBLE); 
+<a name="l480"><span class="ln">480  </span></a>        }else { 
+<a name="l481"><span class="ln">481  </span></a>            btnLogIn.setVisibility(View.VISIBLE); 
+<a name="l482"><span class="ln">482  </span></a>            btnLogOut.setVisibility(View.GONE); 
+<a name="l483"><span class="ln">483  </span></a>        } 
+<a name="l484"><span class="ln">484  </span></a>        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) 
+<a name="l485"><span class="ln">485  </span></a>                .requestIdToken(getString(R.string.default_web_client_id)) 
+<a name="l486"><span class="ln">486  </span></a>                .requestEmail() 
+<a name="l487"><span class="ln">487  </span></a>                .build(); 
+<a name="l488"><span class="ln">488  </span></a> 
+<a name="l489"><span class="ln">489  </span></a>        // Build a GoogleSignInClient with the options specified by gso. 
+<a name="l490"><span class="ln">490  </span></a>        mGoogleSignInClient = GoogleSignIn.getClient(this, gso); 
+<a name="l491"><span class="ln">491  </span></a>    } 
+<a name="l492"><span class="ln">492  </span></a> 
+<a name="l493"><span class="ln">493  </span></a> 
+<a name="l494"><span class="ln">494  </span></a>    private void fillSpinnerWithModulesName(ArrayList&lt;dbModule&gt; userModules) { 
+<a name="l495"><span class="ln">495  </span></a>        //Get modules name in string array 
+<a name="l496"><span class="ln">496  </span></a>        for (dbModule module : 
+<a name="l497"><span class="ln">497  </span></a>                userModules) { 
+<a name="l498"><span class="ln">498  </span></a>            primaryModuleSpinner.add(module.getModuleName()); 
+<a name="l499"><span class="ln">499  </span></a>        } 
+<a name="l500"><span class="ln">500  </span></a>    } 
+<a name="l501"><span class="ln">501  </span></a> 
+<a name="l502"><span class="ln">502  </span></a>    @Override 
+<a name="l503"><span class="ln">503  </span></a>    public void onStart() { 
+<a name="l504"><span class="ln">504  </span></a>        super.onStart(); 
+<a name="l505"><span class="ln">505  </span></a>        // Check if user is signed in (non-null) and update UI accordingly. 
+<a name="l506"><span class="ln">506  </span></a>        FirebaseUser currentUser = mAuth.getCurrentUser(); 
+<a name="l507"><span class="ln">507  </span></a>        updateUI(currentUser); 
+<a name="l508"><span class="ln">508  </span></a>    } 
+<a name="l509"><span class="ln">509  </span></a> 
+<a name="l510"><span class="ln">510  </span></a>    @Override 
+<a name="l511"><span class="ln">511  </span></a>    public boolean onCreateOptionsMenu(Menu menu) { 
+<a name="l512"><span class="ln">512  </span></a>        // Inflate the menu; this adds items to the action bar if it is present. 
+<a name="l513"><span class="ln">513  </span></a>        getMenuInflater().inflate(R.menu.menu_settings, menu); 
+<a name="l514"><span class="ln">514  </span></a>        return true; 
+<a name="l515"><span class="ln">515  </span></a>    } 
+<a name="l516"><span class="ln">516  </span></a> 
+<a name="l517"><span class="ln">517  </span></a>    @Override 
+<a name="l518"><span class="ln">518  </span></a>    public void onActivityResult(int requestCode, int resultCode, Intent data) { 
+<a name="l519"><span class="ln">519  </span></a>        super.onActivityResult(requestCode, resultCode, data); 
+<a name="l520"><span class="ln">520  </span></a>        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...); 
+<a name="l521"><span class="ln">521  </span></a>        if (requestCode == REQUEST_CODE_SIGN_IN) { 
+<a name="l522"><span class="ln">522  </span></a>            // The Task returned from this call is always completed, no need to attach a listener. 
+<a name="l523"><span class="ln">523  </span></a>            Task&lt;GoogleSignInAccount&gt; task = GoogleSignIn.getSignedInAccountFromIntent(data); 
+<a name="l524"><span class="ln">524  </span></a>            handleSignInResult(task); 
+<a name="l525"><span class="ln">525  </span></a>        } 
+<a name="l526"><span class="ln">526  </span></a>    } 
+<a name="l527"><span class="ln">527  </span></a> 
+<a name="l528"><span class="ln">528  </span></a>    private void handleSignInResult(Task&lt;GoogleSignInAccount&gt; completedTask) { 
+<a name="l529"><span class="ln">529  </span></a>        try { 
+<a name="l530"><span class="ln">530  </span></a>            GoogleSignInAccount account = completedTask.getResult(ApiException.class); 
+<a name="l531"><span class="ln">531  </span></a>            // Google Sign In was successful, authenticate with Firebase 
+<a name="l532"><span class="ln">532  </span></a>            firebaseAuthWithGoogle(account); 
+<a name="l533"><span class="ln">533  </span></a>            // FIXME: 2/9/18 Return here if you want to cancel firebase authentication method 
+<a name="l534"><span class="ln">534  </span></a>            // Signed in successfully, show authenticated UI. 
+<a name="l535"><span class="ln">535  </span></a>//            updateUI(account); 
+<a name="l536"><span class="ln">536  </span></a> 
+<a name="l537"><span class="ln">537  </span></a>            //Goto the main activity 
+<a name="l538"><span class="ln">538  </span></a>            Intent iMain = new Intent(SettingsActivity.this, MainActivity.class); 
+<a name="l539"><span class="ln">539  </span></a>            startActivity(iMain); 
+<a name="l540"><span class="ln">540  </span></a>        } catch (ApiException e) { 
+<a name="l541"><span class="ln">541  </span></a>            showAlertMessage(this, 
+<a name="l542"><span class="ln">542  </span></a>                    getString(R.string.title_err_failed_login), 
+<a name="l543"><span class="ln">543  </span></a>                    getString(R.string.title_body_failed_login)); 
+<a name="l544"><span class="ln">544  </span></a> 
+<a name="l545"><span class="ln">545  </span></a>            Log.e(TAG, &quot;err_failedToLogin &quot; + e.getMessage()); 
+<a name="l546"><span class="ln">546  </span></a>            updateUI(null); 
+<a name="l547"><span class="ln">547  </span></a>        } 
+<a name="l548"><span class="ln">548  </span></a>    } 
+<a name="l549"><span class="ln">549  </span></a> 
+<a name="l550"><span class="ln">550  </span></a>    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) { 
+<a name="l551"><span class="ln">551  </span></a>        Log.d(TAG, &quot;firebaseAuthWithGoogle:&quot; + acct.getId()); 
+<a name="l552"><span class="ln">552  </span></a> 
+<a name="l553"><span class="ln">553  </span></a>        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null); 
+<a name="l554"><span class="ln">554  </span></a>        mAuth.signInWithCredential(credential) 
+<a name="l555"><span class="ln">555  </span></a>                .addOnCompleteListener(this, new OnCompleteListener&lt;AuthResult&gt;() { 
+<a name="l556"><span class="ln">556  </span></a>                    @Override 
+<a name="l557"><span class="ln">557  </span></a>                    public void onComplete(@NonNull Task&lt;AuthResult&gt; task) { 
+<a name="l558"><span class="ln">558  </span></a>                        if (task.isSuccessful()) { 
+<a name="l559"><span class="ln">559  </span></a>                            // Sign in success, update UI with the signed-in user's information 
+<a name="l560"><span class="ln">560  </span></a>                            Log.d(TAG, &quot;signInWithCredential:success&quot;); 
+<a name="l561"><span class="ln">561  </span></a>                            FirebaseUser user = mAuth.getCurrentUser(); 
+<a name="l562"><span class="ln">562  </span></a>                            updateUI(user); 
+<a name="l563"><span class="ln">563  </span></a>                        } else { 
+<a name="l564"><span class="ln">564  </span></a>                            // If sign in fails, display a message to the user. 
+<a name="l565"><span class="ln">565  </span></a>                            Log.w(TAG, &quot;signInWithCredential:failure&quot;, task.getException()); 
+<a name="l566"><span class="ln">566  </span></a>                            Snackbar.make(findViewById(R.id.main_layout), &quot;Authentication Failed.&quot;, Snackbar.LENGTH_SHORT).show(); 
+<a name="l567"><span class="ln">567  </span></a>                            updateUI(null); 
+<a name="l568"><span class="ln">568  </span></a>                        } 
+<a name="l569"><span class="ln">569  </span></a>                    } 
+<a name="l570"><span class="ln">570  </span></a>                }); 
+<a name="l571"><span class="ln">571  </span></a>    } 
+<a name="l572"><span class="ln">572  </span></a> 
+<a name="l573"><span class="ln">573  </span></a>    private void signIn() { 
+<a name="l574"><span class="ln">574  </span></a>        Intent signInIntent = mGoogleSignInClient.getSignInIntent(); 
+<a name="l575"><span class="ln">575  </span></a>        startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN); 
+<a name="l576"><span class="ln">576  </span></a>    } 
+<a name="l577"><span class="ln">577  </span></a> 
+<a name="l578"><span class="ln">578  </span></a>    private void signOut() { 
+<a name="l579"><span class="ln">579  </span></a>        mGoogleSignInClient.signOut() 
+<a name="l580"><span class="ln">580  </span></a>            .addOnCompleteListener(this, new OnCompleteListener&lt;Void&gt;() { 
+<a name="l581"><span class="ln">581  </span></a>                @Override 
+<a name="l582"><span class="ln">582  </span></a>                public void onComplete(@NonNull Task&lt;Void&gt; task) { 
+<a name="l583"><span class="ln">583  </span></a>                    updateUI(null); 
+<a name="l584"><span class="ln">584  </span></a>                } 
+<a name="l585"><span class="ln">585  </span></a>            }); 
+<a name="l586"><span class="ln">586  </span></a> 
+<a name="l587"><span class="ln">587  </span></a>        FirebaseAuth.getInstance().signOut(); 
+<a name="l588"><span class="ln">588  </span></a> 
+<a name="l589"><span class="ln">589  </span></a>    } 
+<a name="l590"><span class="ln">590  </span></a> 
+<a name="l591"><span class="ln">591  </span></a>    private void updateUI(@Nullable FirebaseUser account) { 
+<a name="l592"><span class="ln">592  </span></a>        if (account != null) { 
+<a name="l593"><span class="ln">593  </span></a>            mStatusTextView.setText(String.format(&quot;%s %s&quot;, 
+<a name="l594"><span class="ln">594  </span></a>                    getString(R.string.welcome), 
+<a name="l595"><span class="ln">595  </span></a>                    account.getDisplayName())); 
+<a name="l596"><span class="ln">596  </span></a>            btnLogIn.setVisibility(View.GONE); 
+<a name="l597"><span class="ln">597  </span></a>            btnLogOut.setVisibility(View.VISIBLE); 
+<a name="l598"><span class="ln">598  </span></a>            //Get info from google account 
+<a name="l599"><span class="ln">599  </span></a>            fillUserDataFields(account); 
+<a name="l600"><span class="ln">600  </span></a>        } else { 
+<a name="l601"><span class="ln">601  </span></a>            mStatusTextView.setText(R.string.signed_out); 
+<a name="l602"><span class="ln">602  </span></a>            btnLogIn.setVisibility(View.VISIBLE); 
+<a name="l603"><span class="ln">603  </span></a>            btnLogOut.setVisibility(View.GONE); 
+<a name="l604"><span class="ln">604  </span></a>            user.clearUserValues(); 
+<a name="l605"><span class="ln">605  </span></a>        } 
+<a name="l606"><span class="ln">606  </span></a>    } 
+<a name="l607"><span class="ln">607  </span></a> 
+<a name="l608"><span class="ln">608  </span></a>    private void fillUserDataFields(@Nullable FirebaseUser account) { 
+<a name="l609"><span class="ln">609  </span></a> 
+<a name="l610"><span class="ln">610  </span></a>        // Get information from google server 
+<a name="l611"><span class="ln">611  </span></a>        user.setUserName(account.getDisplayName()); 
+<a name="l612"><span class="ln">612  </span></a>        user.setUserEmail(account.getEmail()); 
+<a name="l613"><span class="ln">613  </span></a>        user.setUserID(account.getUid()); 
+<a name="l614"><span class="ln">614  </span></a>//        user.setUserAvatar(account.getPhotoUrl()); 
+<a name="l615"><span class="ln">615  </span></a>        user.setUserLoggedIn(true); 
+<a name="l616"><span class="ln">616  </span></a> 
+<a name="l617"><span class="ln">617  </span></a>        // TODO: 1/3/18 Get user profile from shared File. 
+<a name="l618"><span class="ln">618  </span></a>    } 
+<a name="l619"><span class="ln">619  </span></a> 
+<a name="l620"><span class="ln">620  </span></a>    @Override 
+<a name="l621"><span class="ln">621  </span></a>    public void onClick(View v) { 
+<a name="l622"><span class="ln">622  </span></a>        switch (v.getId()) { 
+<a name="l623"><span class="ln">623  </span></a>            case R.id.sign_in_button: 
+<a name="l624"><span class="ln">624  </span></a>                if (hasInternetConnection()){ 
+<a name="l625"><span class="ln">625  </span></a>                    signIn(); 
+<a name="l626"><span class="ln">626  </span></a>                } 
+<a name="l627"><span class="ln">627  </span></a>                else { 
+<a name="l628"><span class="ln">628  </span></a>                    showAlertMessage(this, 
+<a name="l629"><span class="ln">629  </span></a>                            getString(R.string.title_err_net_connetion), 
+<a name="l630"><span class="ln">630  </span></a>                            getString(R.string.msg_err_net_connetion)); 
+<a name="l631"><span class="ln">631  </span></a>                } 
+<a name="l632"><span class="ln">632  </span></a>                break; 
+<a name="l633"><span class="ln">633  </span></a>            case R.id.sign_out_button: 
+<a name="l634"><span class="ln">634  </span></a>                signOut(); 
+<a name="l635"><span class="ln">635  </span></a>                break; 
+<a name="l636"><span class="ln">636  </span></a>        } 
+<a name="l637"><span class="ln">637  </span></a>    } 
+<a name="l638"><span class="ln">638  </span></a> 
+<a name="l639"><span class="ln">639  </span></a>    public boolean hasInternetConnection() { 
+<a name="l640"><span class="ln">640  </span></a>        ConnectivityManager connectivityManager = (ConnectivityManager) 
+<a name="l641"><span class="ln">641  </span></a>                getSystemService(this.CONNECTIVITY_SERVICE); 
+<a name="l642"><span class="ln">642  </span></a>        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo(); 
+<a name="l643"><span class="ln">643  </span></a>        return networkInfo != null &amp;&amp; networkInfo.isConnectedOrConnecting(); 
+<a name="l644"><span class="ln">644  </span></a>    } 
+<a name="l645"><span class="ln">645  </span></a> 
+<a name="l646"><span class="ln">646  </span></a>    @Override 
+<a name="l647"><span class="ln">647  </span></a>    public boolean onNavigationItemSelected(@NonNull MenuItem item) { 
+<a name="l648"><span class="ln">648  </span></a>//        if (id == R.id.action_settings) { 
+<a name="l649"><span class="ln">649  </span></a>//            return true; 
+<a name="l650"><span class="ln">650  </span></a>//        } 
+<a name="l651"><span class="ln">651  </span></a>        return super.onOptionsItemSelected(item); 
+<a name="l652"><span class="ln">652  </span></a>    } 
+<a name="l653"><span class="ln">653  </span></a> 
+<a name="l654"><span class="ln">654  </span></a>    */</span><span class="s1"> 
+<a name="l655"><span class="ln">655  </span></a>}</span></pre>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffff"
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="206dp"
+        android:layout_height="247dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        />
+
+<!--    android:layout_marginLeft="85dp"-->
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="TextView"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"/>
+<!--        android:layout_marginLeft="85dp"-->
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="264dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Description"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_below="@+id/title"/>
+</RelativeLayout>
