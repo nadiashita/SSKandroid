@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="NeoSpectra.app" target="1.8" />
       <module name="NeoSpectra.neospectralib" target="1.8" />
+      <module name="SSKandroid.NeoSpectra.app" target="1.8" />
+      <module name="SSKandroid.NeoSpectra.neospectralib" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
