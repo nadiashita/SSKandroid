@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingTop="10dp"
+    android:paddingRight="30dp">
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:src="@drawable/handle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:text="Are You Sure?"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:text="Do you really want to refresh these
+records? this process cannot be undone."
+            android:textAlignment="center"
+            android:textColor="#666666"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btn_yes"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#1D86FF"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Yes"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                tools:ignore="RtlCompat" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#fff"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Cancel"
+                android:textAlignment="center"
+                android:textColor="#F35350"
+                android:textSize="16dp"
+                tools:ignore="RtlCompat" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_process"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:src="@drawable/handle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Are You Sure?"
+            android:textColor="#000"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:text="Do you really want to  process
+this records?"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btn_yes2"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#1D86FF"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Yes"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btn_cancel2"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#fff"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Cancel"
+                android:textColor="#F35350"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_export"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:src="@drawable/handle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center_horizontal"
+            android:text="Are You Sure?"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center_horizontal"
+            android:text="Do you really want to export these record?"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btn_yes3"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#1D86FF"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Yes"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btn_cancel3"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#fff"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Cancel"
+                android:textColor="#F35350"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:contentDescription="Header"
+            android:src="@drawable/handle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="Are You Sure?"
+            android:textColor="#000"
+            android:textSize="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="Do you really want to sync these? this process cannot be undone."
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/buttonYes"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#2A74F4"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Yes"
+                android:textAlignment="center"
+                android:textColor="#FFF"
+                android:textSize="16sp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/buttonNo"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="#FFF"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_regular"
+                android:text="No"
+                android:textAlignment="center"
+                android:textColor="#B00020"
+                android:textSize="16sp" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</LinearLayout>

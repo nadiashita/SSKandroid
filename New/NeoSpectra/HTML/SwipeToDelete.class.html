@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>SwipeToDelete.class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+SwipeToDelete.class</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">//</span><span class="s1"> 
+<a name="l2"><span class="ln">2    </span></a></span><span class="s0">// Source code recreated from a .class file by IntelliJ IDEA</span><span class="s1"> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">// (powered by Fernflower decompiler)</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s2">package </span><span class="s1">com.si_ware.neospectra.myViews; 
+<a name="l7"><span class="ln">7    </span></a> 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s2">import </span><span class="s1">android.content.Context; 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s2">import </span><span class="s1">android.graphics.Canvas; 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s2">import </span><span class="s1">android.graphics.Paint; 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s2">import </span><span class="s1">android.graphics.Paint.Align; 
+<a name="l12"><span class="ln">12   </span></a></span><span class="s2">import </span><span class="s1">android.graphics.PorterDuff.Mode; 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s2">import </span><span class="s1">android.graphics.drawable.ColorDrawable; 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s2">import </span><span class="s1">android.graphics.drawable.Drawable; 
+<a name="l15"><span class="ln">15   </span></a></span><span class="s2">import </span><span class="s1">android.support.annotation.NonNull; 
+<a name="l16"><span class="ln">16   </span></a></span><span class="s2">import </span><span class="s1">android.support.v4.content.ContextCompat; 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s2">import </span><span class="s1">android.support.v7.widget.RecyclerView; 
+<a name="l18"><span class="ln">18   </span></a></span><span class="s2">import </span><span class="s1">android.support.v7.widget.RecyclerView.ViewHolder; 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s2">import </span><span class="s1">android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback; 
+<a name="l20"><span class="ln">20   </span></a></span><span class="s2">import </span><span class="s1">android.view.View; 
+<a name="l21"><span class="ln">21   </span></a> 
+<a name="l22"><span class="ln">22   </span></a></span><span class="s2">abstract class </span><span class="s1">SwipeToDelete </span><span class="s2">extends </span><span class="s1">SimpleCallback { 
+<a name="l23"><span class="ln">23   </span></a>    </span><span class="s2">private </span><span class="s1">Drawable background; 
+<a name="l24"><span class="ln">24   </span></a>    </span><span class="s2">private </span><span class="s1">Drawable deleteIcon; 
+<a name="l25"><span class="ln">25   </span></a>    </span><span class="s2">private int </span><span class="s1">xMarkMargin; 
+<a name="l26"><span class="ln">26   </span></a>    </span><span class="s2">private boolean </span><span class="s1">initiated; 
+<a name="l27"><span class="ln">27   </span></a>    </span><span class="s2">private </span><span class="s1">Context context; 
+<a name="l28"><span class="ln">28   </span></a>    </span><span class="s2">private int </span><span class="s1">leftColorCode; 
+<a name="l29"><span class="ln">29   </span></a>    </span><span class="s2">private </span><span class="s1">String leftSwipeLabel; 
+<a name="l30"><span class="ln">30   </span></a> 
+<a name="l31"><span class="ln">31   </span></a>    SwipeToDelete(</span><span class="s2">int </span><span class="s1">dragDirs, </span><span class="s2">int </span><span class="s1">swipeDirs, Context context) { 
+<a name="l32"><span class="ln">32   </span></a>        </span><span class="s2">super</span><span class="s1">(dragDirs, swipeDirs); 
+<a name="l33"><span class="ln">33   </span></a>        </span><span class="s2">this</span><span class="s1">.context = context; 
+<a name="l34"><span class="ln">34   </span></a>    } 
+<a name="l35"><span class="ln">35   </span></a> 
+<a name="l36"><span class="ln">36   </span></a>    </span><span class="s2">private void </span><span class="s1">init() { 
+<a name="l37"><span class="ln">37   </span></a>        </span><span class="s2">this</span><span class="s1">.background = </span><span class="s2">new </span><span class="s1">ColorDrawable(); 
+<a name="l38"><span class="ln">38   </span></a>        </span><span class="s2">this</span><span class="s1">.xMarkMargin = (</span><span class="s2">int</span><span class="s1">)</span><span class="s2">this</span><span class="s1">.context.getResources().getDimension(</span><span class="s3">2131165363</span><span class="s1">); 
+<a name="l39"><span class="ln">39   </span></a>        </span><span class="s2">this</span><span class="s1">.deleteIcon = ContextCompat.getDrawable(</span><span class="s2">this</span><span class="s1">.context, </span><span class="s3">17301564</span><span class="s1">); 
+<a name="l40"><span class="ln">40   </span></a>        </span><span class="s2">this</span><span class="s1">.deleteIcon.setColorFilter(-</span><span class="s3">1</span><span class="s1">, Mode.SRC_ATOP); 
+<a name="l41"><span class="ln">41   </span></a>        </span><span class="s2">this</span><span class="s1">.initiated = </span><span class="s2">true</span><span class="s1">; 
+<a name="l42"><span class="ln">42   </span></a>    } 
+<a name="l43"><span class="ln">43   </span></a> 
+<a name="l44"><span class="ln">44   </span></a>    </span><span class="s2">public boolean </span><span class="s1">onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) { 
+<a name="l45"><span class="ln">45   </span></a>        </span><span class="s2">return false</span><span class="s1">; 
+<a name="l46"><span class="ln">46   </span></a>    } 
+<a name="l47"><span class="ln">47   </span></a> 
+<a name="l48"><span class="ln">48   </span></a>    </span><span class="s2">public abstract void </span><span class="s1">onSwiped(ViewHolder var1, </span><span class="s2">int </span><span class="s1">var2); 
+<a name="l49"><span class="ln">49   </span></a> 
+<a name="l50"><span class="ln">50   </span></a>    </span><span class="s2">public int </span><span class="s1">getSwipeDirs(RecyclerView recyclerView, ViewHolder viewHolder) { 
+<a name="l51"><span class="ln">51   </span></a>        </span><span class="s2">return super</span><span class="s1">.getSwipeDirs(recyclerView, viewHolder); 
+<a name="l52"><span class="ln">52   </span></a>    } 
+<a name="l53"><span class="ln">53   </span></a> 
+<a name="l54"><span class="ln">54   </span></a>    </span><span class="s2">public void </span><span class="s1">onChildDraw(@NonNull Canvas c, RecyclerView recyclerView, ViewHolder viewHolder, </span><span class="s2">float </span><span class="s1">dX, </span><span class="s2">float </span><span class="s1">dY, </span><span class="s2">int </span><span class="s1">actionState, </span><span class="s2">boolean </span><span class="s1">isCurrentlyActive) { 
+<a name="l55"><span class="ln">55   </span></a>        View itemView = viewHolder.itemView; 
+<a name="l56"><span class="ln">56   </span></a>        </span><span class="s2">if </span><span class="s1">(!</span><span class="s2">this</span><span class="s1">.initiated) { 
+<a name="l57"><span class="ln">57   </span></a>            </span><span class="s2">this</span><span class="s1">.init(); 
+<a name="l58"><span class="ln">58   </span></a>        } 
+<a name="l59"><span class="ln">59   </span></a> 
+<a name="l60"><span class="ln">60   </span></a>        </span><span class="s2">int </span><span class="s1">itemHeight = itemView.getBottom() - itemView.getTop(); 
+<a name="l61"><span class="ln">61   </span></a>        ((ColorDrawable)</span><span class="s2">this</span><span class="s1">.background).setColor(</span><span class="s2">this</span><span class="s1">.getLeftColorCode()); 
+<a name="l62"><span class="ln">62   </span></a>        </span><span class="s2">this</span><span class="s1">.background.setBounds(itemView.getRight() + (</span><span class="s2">int</span><span class="s1">)dX, itemView.getTop(), itemView.getRight(), itemView.getBottom()); 
+<a name="l63"><span class="ln">63   </span></a>        </span><span class="s2">this</span><span class="s1">.background.draw(c); 
+<a name="l64"><span class="ln">64   </span></a>        </span><span class="s2">int </span><span class="s1">intrinsicWidth = </span><span class="s2">this</span><span class="s1">.deleteIcon.getIntrinsicWidth(); 
+<a name="l65"><span class="ln">65   </span></a>        </span><span class="s2">int </span><span class="s1">intrinsicHeight = </span><span class="s2">this</span><span class="s1">.deleteIcon.getIntrinsicWidth(); 
+<a name="l66"><span class="ln">66   </span></a>        </span><span class="s2">int </span><span class="s1">xMarkLeft = itemView.getRight() - </span><span class="s2">this</span><span class="s1">.xMarkMargin - intrinsicWidth; 
+<a name="l67"><span class="ln">67   </span></a>        </span><span class="s2">int </span><span class="s1">xMarkRight = itemView.getRight() - </span><span class="s2">this</span><span class="s1">.xMarkMargin; 
+<a name="l68"><span class="ln">68   </span></a>        </span><span class="s2">int </span><span class="s1">xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / </span><span class="s3">2</span><span class="s1">; 
+<a name="l69"><span class="ln">69   </span></a>        </span><span class="s2">int </span><span class="s1">xMarkBottom = xMarkTop + intrinsicHeight; 
+<a name="l70"><span class="ln">70   </span></a>        </span><span class="s2">this</span><span class="s1">.deleteIcon.setBounds(xMarkLeft, xMarkTop + </span><span class="s3">16</span><span class="s1">, xMarkRight, xMarkBottom); 
+<a name="l71"><span class="ln">71   </span></a>        </span><span class="s2">this</span><span class="s1">.deleteIcon.draw(c); 
+<a name="l72"><span class="ln">72   </span></a>        Paint paint = </span><span class="s2">new </span><span class="s1">Paint(); 
+<a name="l73"><span class="ln">73   </span></a>        paint.setColor(-</span><span class="s3">1</span><span class="s1">); 
+<a name="l74"><span class="ln">74   </span></a>        paint.setTextSize(</span><span class="s3">48.0F</span><span class="s1">); 
+<a name="l75"><span class="ln">75   </span></a>        paint.setTextAlign(Align.CENTER); 
+<a name="l76"><span class="ln">76   </span></a>        c.drawText(</span><span class="s2">this</span><span class="s1">.getLeftSwipeLabel(), (</span><span class="s2">float</span><span class="s1">)(xMarkLeft + </span><span class="s3">10</span><span class="s1">), (</span><span class="s2">float</span><span class="s1">)(xMarkTop + </span><span class="s3">10</span><span class="s1">), paint); 
+<a name="l77"><span class="ln">77   </span></a>        </span><span class="s2">super</span><span class="s1">.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive); 
+<a name="l78"><span class="ln">78   </span></a>    } 
+<a name="l79"><span class="ln">79   </span></a> 
+<a name="l80"><span class="ln">80   </span></a>    </span><span class="s2">private </span><span class="s1">String getLeftSwipeLabel() { 
+<a name="l81"><span class="ln">81   </span></a>        </span><span class="s2">return this</span><span class="s1">.leftSwipeLabel; 
+<a name="l82"><span class="ln">82   </span></a>    } 
+<a name="l83"><span class="ln">83   </span></a> 
+<a name="l84"><span class="ln">84   </span></a>    </span><span class="s2">void </span><span class="s1">setLeftSwipeLabel(String leftSwipeLabel) { 
+<a name="l85"><span class="ln">85   </span></a>        </span><span class="s2">this</span><span class="s1">.leftSwipeLabel = leftSwipeLabel; 
+<a name="l86"><span class="ln">86   </span></a>    } 
+<a name="l87"><span class="ln">87   </span></a> 
+<a name="l88"><span class="ln">88   </span></a>    </span><span class="s2">private int </span><span class="s1">getLeftColorCode() { 
+<a name="l89"><span class="ln">89   </span></a>        </span><span class="s2">return this</span><span class="s1">.leftColorCode; 
+<a name="l90"><span class="ln">90   </span></a>    } 
+<a name="l91"><span class="ln">91   </span></a> 
+<a name="l92"><span class="ln">92   </span></a>    </span><span class="s2">void </span><span class="s1">setLeftColorCode(</span><span class="s2">int </span><span class="s1">leftColorCode) { 
+<a name="l93"><span class="ln">93   </span></a>        </span><span class="s2">this</span><span class="s1">.leftColorCode = leftColorCode; 
+<a name="l94"><span class="ln">94   </span></a>    } 
+<a name="l95"><span class="ln">95   </span></a>} 
+<a name="l96"><span class="ln">96   </span></a></span></pre>
+</body>
+</html>

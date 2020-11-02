@@ -1,0 +1,78 @@
+<resources>
+    <!-- Base application theme. -->
+
+    Dark Buttons
+
+    <!--<style name="AppTheme.NoActionBar">-->
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="windowNoTitle">true</item>-->
+    <!--</style>-->
+
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+    </style>
+
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+    </style>
+
+    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/icons_menu_dot</item>
+        <item name="android:contentDescription">"Options"</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#42221f1f
+        </item>
+    </style>
+
+    <style name="AppTheme.Popup" >
+        <!-- Customize your theme here. -->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:elevation">10dp</item>
+        <!--<item name="android:windowContentOverlay">@drawable/bottm_buttons</item>-->
+    </style>
+
+<!--    <selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--        <item android:color="@android:color/white" android:state_checked="true"/>-->
+<!--        <item android:color="@color/colorPrimaryDark"/>-->
+<!--    </selector>-->
+
+    <style name="AppBottomSheetDialogTheme"
+        parent = "Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/layout_rounded_bg</item>
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="AppTheme2">
+        <item name="android:textColorSecondary">#000</item>
+    </style>
+
+</resources>

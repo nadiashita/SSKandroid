@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Security.class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Security.class</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">//</span><span class="s1"> 
+<a name="l2"><span class="ln">2    </span></a></span><span class="s0">// Source code recreated from a .class file by IntelliJ IDEA</span><span class="s1"> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">// (powered by Fernflower decompiler)</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s2">package </span><span class="s1">com.si_ware.neospectra.InAppBillingUtil; 
+<a name="l7"><span class="ln">7    </span></a> 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s2">import </span><span class="s1">android.support.annotation.NonNull; 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s2">import </span><span class="s1">android.text.TextUtils; 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s2">import </span><span class="s1">android.util.Base64; 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s2">import </span><span class="s1">android.util.Log; 
+<a name="l12"><span class="ln">12   </span></a></span><span class="s2">import </span><span class="s1">java.security.InvalidKeyException; 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s2">import </span><span class="s1">java.security.KeyFactory; 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s2">import </span><span class="s1">java.security.NoSuchAlgorithmException; 
+<a name="l15"><span class="ln">15   </span></a></span><span class="s2">import </span><span class="s1">java.security.PublicKey; 
+<a name="l16"><span class="ln">16   </span></a></span><span class="s2">import </span><span class="s1">java.security.Signature; 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s2">import </span><span class="s1">java.security.SignatureException; 
+<a name="l18"><span class="ln">18   </span></a></span><span class="s2">import </span><span class="s1">java.security.spec.InvalidKeySpecException; 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s2">import </span><span class="s1">java.security.spec.X509EncodedKeySpec; 
+<a name="l20"><span class="ln">20   </span></a> 
+<a name="l21"><span class="ln">21   </span></a></span><span class="s2">public class </span><span class="s1">Security { 
+<a name="l22"><span class="ln">22   </span></a>    </span><span class="s2">private static final </span><span class="s1">String TAG = </span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">; 
+<a name="l23"><span class="ln">23   </span></a>    </span><span class="s2">private static final </span><span class="s1">String KEY_FACTORY_ALGORITHM = </span><span class="s3">&quot;RSA&quot;</span><span class="s1">; 
+<a name="l24"><span class="ln">24   </span></a>    </span><span class="s2">private static final </span><span class="s1">String SIGNATURE_ALGORITHM = </span><span class="s3">&quot;SHA1withRSA&quot;</span><span class="s1">; 
+<a name="l25"><span class="ln">25   </span></a> 
+<a name="l26"><span class="ln">26   </span></a>    </span><span class="s2">public </span><span class="s1">Security() { 
+<a name="l27"><span class="ln">27   </span></a>    } 
+<a name="l28"><span class="ln">28   </span></a> 
+<a name="l29"><span class="ln">29   </span></a>    </span><span class="s2">public static boolean </span><span class="s1">verifyPurchase(String base64PublicKey, @NonNull String signedData, String signature) { 
+<a name="l30"><span class="ln">30   </span></a>        </span><span class="s2">if </span><span class="s1">(!TextUtils.isEmpty(signedData) &amp;&amp; !TextUtils.isEmpty(base64PublicKey) &amp;&amp; !TextUtils.isEmpty(signature)) { 
+<a name="l31"><span class="ln">31   </span></a>            PublicKey key = generatePublicKey(base64PublicKey); 
+<a name="l32"><span class="ln">32   </span></a>            </span><span class="s2">return </span><span class="s1">verify(key, signedData, signature); 
+<a name="l33"><span class="ln">33   </span></a>        } </span><span class="s2">else </span><span class="s1">{ 
+<a name="l34"><span class="ln">34   </span></a>            Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;Purchase verification failed: missing data.&quot;</span><span class="s1">); 
+<a name="l35"><span class="ln">35   </span></a>            </span><span class="s2">return false</span><span class="s1">; 
+<a name="l36"><span class="ln">36   </span></a>        } 
+<a name="l37"><span class="ln">37   </span></a>    } 
+<a name="l38"><span class="ln">38   </span></a> 
+<a name="l39"><span class="ln">39   </span></a>    </span><span class="s2">public static </span><span class="s1">PublicKey generatePublicKey(String encodedPublicKey) { 
+<a name="l40"><span class="ln">40   </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l41"><span class="ln">41   </span></a>            </span><span class="s2">byte</span><span class="s1">[] decodedKey = Base64.decode(encodedPublicKey, </span><span class="s4">0</span><span class="s1">); 
+<a name="l42"><span class="ln">42   </span></a>            KeyFactory keyFactory = KeyFactory.getInstance(</span><span class="s3">&quot;RSA&quot;</span><span class="s1">); 
+<a name="l43"><span class="ln">43   </span></a>            </span><span class="s2">return </span><span class="s1">keyFactory.generatePublic(</span><span class="s2">new </span><span class="s1">X509EncodedKeySpec(decodedKey)); 
+<a name="l44"><span class="ln">44   </span></a>        } </span><span class="s2">catch </span><span class="s1">(NoSuchAlgorithmException var3) { 
+<a name="l45"><span class="ln">45   </span></a>            </span><span class="s2">throw new </span><span class="s1">RuntimeException(var3); 
+<a name="l46"><span class="ln">46   </span></a>        } </span><span class="s2">catch </span><span class="s1">(InvalidKeySpecException var4) { 
+<a name="l47"><span class="ln">47   </span></a>            Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;Invalid key specification.&quot;</span><span class="s1">); 
+<a name="l48"><span class="ln">48   </span></a>            </span><span class="s2">throw new </span><span class="s1">IllegalArgumentException(var4); 
+<a name="l49"><span class="ln">49   </span></a>        } 
+<a name="l50"><span class="ln">50   </span></a>    } 
+<a name="l51"><span class="ln">51   </span></a> 
+<a name="l52"><span class="ln">52   </span></a>    </span><span class="s2">public static boolean </span><span class="s1">verify(PublicKey publicKey, @NonNull String signedData, String signature) { 
+<a name="l53"><span class="ln">53   </span></a>        </span><span class="s2">byte</span><span class="s1">[] signatureBytes; 
+<a name="l54"><span class="ln">54   </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l55"><span class="ln">55   </span></a>            signatureBytes = Base64.decode(signature, </span><span class="s4">0</span><span class="s1">); 
+<a name="l56"><span class="ln">56   </span></a>        } </span><span class="s2">catch </span><span class="s1">(IllegalArgumentException var8) { 
+<a name="l57"><span class="ln">57   </span></a>            Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;Base64 decoding failed.&quot;</span><span class="s1">); 
+<a name="l58"><span class="ln">58   </span></a>            </span><span class="s2">return false</span><span class="s1">; 
+<a name="l59"><span class="ln">59   </span></a>        } 
+<a name="l60"><span class="ln">60   </span></a> 
+<a name="l61"><span class="ln">61   </span></a>        </span><span class="s2">try </span><span class="s1">{ 
+<a name="l62"><span class="ln">62   </span></a>            Signature sig = Signature.getInstance(</span><span class="s3">&quot;SHA1withRSA&quot;</span><span class="s1">); 
+<a name="l63"><span class="ln">63   </span></a>            sig.initVerify(publicKey); 
+<a name="l64"><span class="ln">64   </span></a>            sig.update(signedData.getBytes()); 
+<a name="l65"><span class="ln">65   </span></a>            </span><span class="s2">if </span><span class="s1">(!sig.verify(signatureBytes)) { 
+<a name="l66"><span class="ln">66   </span></a>                Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;Signature verification failed.&quot;</span><span class="s1">); 
+<a name="l67"><span class="ln">67   </span></a>                </span><span class="s2">return false</span><span class="s1">; 
+<a name="l68"><span class="ln">68   </span></a>            } 
+<a name="l69"><span class="ln">69   </span></a> 
+<a name="l70"><span class="ln">70   </span></a>            </span><span class="s2">return true</span><span class="s1">; 
+<a name="l71"><span class="ln">71   </span></a>        } </span><span class="s2">catch </span><span class="s1">(NoSuchAlgorithmException var5) { 
+<a name="l72"><span class="ln">72   </span></a>            Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;NoSuchAlgorithmException.&quot;</span><span class="s1">); 
+<a name="l73"><span class="ln">73   </span></a>        } </span><span class="s2">catch </span><span class="s1">(InvalidKeyException var6) { 
+<a name="l74"><span class="ln">74   </span></a>            Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;Invalid key specification.&quot;</span><span class="s1">); 
+<a name="l75"><span class="ln">75   </span></a>        } </span><span class="s2">catch </span><span class="s1">(SignatureException var7) { 
+<a name="l76"><span class="ln">76   </span></a>            Log.e(</span><span class="s3">&quot;IABUtil/Security&quot;</span><span class="s1">, </span><span class="s3">&quot;Signature exception.&quot;</span><span class="s1">); 
+<a name="l77"><span class="ln">77   </span></a>        } 
+<a name="l78"><span class="ln">78   </span></a> 
+<a name="l79"><span class="ln">79   </span></a>        </span><span class="s2">return false</span><span class="s1">; 
+<a name="l80"><span class="ln">80   </span></a>    } 
+<a name="l81"><span class="ln">81   </span></a>} 
+<a name="l82"><span class="ln">82   </span></a></span></pre>
+</body>
+</html>

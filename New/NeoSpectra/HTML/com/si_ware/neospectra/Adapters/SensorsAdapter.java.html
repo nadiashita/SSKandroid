@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>SensorsAdapter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { color: rgb(0,0,0); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+SensorsAdapter.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">//package com.si_ware.neospectra.Adapters;</span><span class="s1"> 
+<a name="l2"><span class="ln">2    </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">//import android.content.Context;</span><span class="s1"> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">//import android.support.annotation.NonNull;</span><span class="s1"> 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">//import android.support.v7.widget.RecyclerView;</span><span class="s1"> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s0">//import android.support.v7.widget.RecyclerView.Adapter;</span><span class="s1"> 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">//import android.view.LayoutInflater;</span><span class="s1"> 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">//import android.view.View;</span><span class="s1"> 
+<a name="l9"><span class="ln">9    </span></a></span><span class="s0">//import android.view.ViewGroup;</span><span class="s1"> 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">//import android.widget.Button;</span><span class="s1"> 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s0">//import android.widget.ProgressBar;</span><span class="s1"> 
+<a name="l12"><span class="ln">12   </span></a></span><span class="s0">//import android.widget.TextView;</span><span class="s1"> 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s0">//import com.si_ware.neospectra.BluetoothSDK.SWS_P3BLEDevice;</span><span class="s1"> 
+<a name="l15"><span class="ln">15   </span></a></span><span class="s0">//import com.si_ware.neospectra.R;</span><span class="s1"> 
+<a name="l16"><span class="ln">16   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l17"><span class="ln">17   </span></a></span><span class="s0">//import java.util.List;</span><span class="s1"> 
+<a name="l18"><span class="ln">18   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l19"><span class="ln">19   </span></a></span><span class="s0">//import static com.si_ware.neospectra.Global.GlobalVariables.bluetoothAPI;</span><span class="s1"> 
+<a name="l20"><span class="ln">20   </span></a></span><span class="s0">//import static com.si_ware.neospectra.Global.MethodsFactory.logMessage;</span><span class="s1"> 
+<a name="l21"><span class="ln">21   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l22"><span class="ln">22   </span></a></span><span class="s0">///**</span><span class="s1"> 
+<a name="l23"><span class="ln">23   </span></a></span><span class="s0">// * Created by amrwinter on 6/20/18.</span><span class="s1"> 
+<a name="l24"><span class="ln">24   </span></a></span><span class="s0">// */</span><span class="s1"> 
+<a name="l25"><span class="ln">25   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l26"><span class="ln">26   </span></a></span><span class="s0">//public class SensorsAdapter extends Adapter&lt;SensorsAdapter.SensorViewHolder&gt; {</span><span class="s1"> 
+<a name="l27"><span class="ln">27   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l28"><span class="ln">28   </span></a></span><span class="s0">//    private LayoutInflater inflater;</span><span class="s1"> 
+<a name="l29"><span class="ln">29   </span></a></span><span class="s0">//    private Context mContext;</span><span class="s1"> 
+<a name="l30"><span class="ln">30   </span></a></span><span class="s0">//    // TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l31"><span class="ln">31   </span></a></span><span class="s0">////    private List&lt;SWS_P3BLEDevice&gt; sensors;</span><span class="s1"> 
+<a name="l32"><span class="ln">32   </span></a></span><span class="s0">//    @NonNull</span><span class="s1"> 
+<a name="l33"><span class="ln">33   </span></a></span><span class="s0">//    private String TAG = &quot;SensorAdapter&quot;;</span><span class="s1"> 
+<a name="l34"><span class="ln">34   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l35"><span class="ln">35   </span></a></span><span class="s0">//    // TODO: 7/27/2018 JavaDoc</span><span class="s1"> 
+<a name="l36"><span class="ln">36   </span></a></span><span class="s0">//    public SensorsAdapter(Context context, List&lt;SWS_P3BLEDevice&gt; devices) {</span><span class="s1"> 
+<a name="l37"><span class="ln">37   </span></a></span><span class="s0">////        sensorAdapterIsInitialized = false;</span><span class="s1"> 
+<a name="l38"><span class="ln">38   </span></a></span><span class="s0">//        this.mContext = context;</span><span class="s1"> 
+<a name="l39"><span class="ln">39   </span></a></span><span class="s0">//        this.inflater = LayoutInflater.from(mContext);</span><span class="s1"> 
+<a name="l40"><span class="ln">40   </span></a></span><span class="s0">//        this.sensors = devices;</span><span class="s1"> 
+<a name="l41"><span class="ln">41   </span></a></span><span class="s0">//        logMessage(&quot;blutooth&quot;, &quot;Devices in constructor length: &quot; + devices.size() +</span><span class="s1"> 
+<a name="l42"><span class="ln">42   </span></a></span><span class="s0">//                &quot;, Sensors: &quot; + sensors.size());</span><span class="s1"> 
+<a name="l43"><span class="ln">43   </span></a></span><span class="s0">////        Toast.makeText(context, &quot;Devices in constructor length: &quot; + devices.size() +</span><span class="s1"> 
+<a name="l44"><span class="ln">44   </span></a></span><span class="s0">////                &quot;, Sensors: &quot; + sensors.size(), Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+<a name="l45"><span class="ln">45   </span></a></span><span class="s0">//    }</span><span class="s1"> 
+<a name="l46"><span class="ln">46   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l47"><span class="ln">47   </span></a></span><span class="s0">//    @NonNull</span><span class="s1"> 
+<a name="l48"><span class="ln">48   </span></a></span><span class="s0">//    @Override</span><span class="s1"> 
+<a name="l49"><span class="ln">49   </span></a></span><span class="s0">//    public SensorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {</span><span class="s1"> 
+<a name="l50"><span class="ln">50   </span></a></span><span class="s0">//        logMessage(&quot;bluetooth .. adapter&quot;, &quot;Creating view holder 1&quot;);</span><span class="s1"> 
+<a name="l51"><span class="ln">51   </span></a></span><span class="s0">//        View view = inflater.inflate(R.layout.row_bluetooth_device, parent, false);</span><span class="s1"> 
+<a name="l52"><span class="ln">52   </span></a></span><span class="s0">//        logMessage(&quot;bluetooth .. adapter&quot;, &quot;Creating view holder 2&quot;);</span><span class="s1"> 
+<a name="l53"><span class="ln">53   </span></a></span><span class="s0">//        return new SensorViewHolder(view);</span><span class="s1"> 
+<a name="l54"><span class="ln">54   </span></a></span><span class="s0">//    }</span><span class="s1"> 
+<a name="l55"><span class="ln">55   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l56"><span class="ln">56   </span></a></span><span class="s0">//    @Override</span><span class="s1"> 
+<a name="l57"><span class="ln">57   </span></a></span><span class="s0">//    public void onBindViewHolder(@NonNull SensorViewHolder currentViewHolder, int position) {</span><span class="s1"> 
+<a name="l58"><span class="ln">58   </span></a></span><span class="s0">////        Toast.makeText(mContext, &quot;trying to Bind, Length: &quot; + sensors.size(), Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+<a name="l59"><span class="ln">59   </span></a></span><span class="s0">//        try {</span><span class="s1"> 
+<a name="l60"><span class="ln">60   </span></a></span><span class="s0">//            logMessage(&quot;bluetooth .. adapter&quot;, &quot;Binding in adapter, the list length equals: &quot; + sensors.size());</span><span class="s1"> 
+<a name="l61"><span class="ln">61   </span></a></span><span class="s0">////            Toast.makeText(mContext, &quot;Started binding, list length equals: &quot; + sensors.size(), Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+<a name="l62"><span class="ln">62   </span></a></span><span class="s0">//            SWS_P3BLEDevice currentDevice = sensors.get(position);</span><span class="s1"> 
+<a name="l63"><span class="ln">63   </span></a></span><span class="s0">//            String name = currentDevice.getDeviceName();</span><span class="s1"> 
+<a name="l64"><span class="ln">64   </span></a></span><span class="s0">//            if (name != null)currentViewHolder.tvName.setText(name);</span><span class="s1"> 
+<a name="l65"><span class="ln">65   </span></a></span><span class="s0">//            String mac = currentDevice.getDeviceMacAddress();</span><span class="s1"> 
+<a name="l66"><span class="ln">66   </span></a></span><span class="s0">//            if (mac != null) currentViewHolder.tvMac.setText(mac);</span><span class="s1"> 
+<a name="l67"><span class="ln">67   </span></a></span><span class="s0">//            ProgressBar mScanProgress = currentViewHolder.progressBar;</span><span class="s1"> 
+<a name="l68"><span class="ln">68   </span></a></span><span class="s0">//            Button btnConnect = currentViewHolder.btnConnect;</span><span class="s1"> 
+<a name="l69"><span class="ln">69   </span></a></span><span class="s0">//            btnConnect.setOnClickListener(v -&gt; {</span><span class="s1"> 
+<a name="l70"><span class="ln">70   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l71"><span class="ln">71   </span></a></span><span class="s0">//                if (btnConnect.getText().equals(mContext.getResources().getString(R.string.disconnect))) {</span><span class="s1"> 
+<a name="l72"><span class="ln">72   </span></a></span><span class="s0">////                    mAppStatus.setText(&quot;Disconnecting ... &quot;);</span><span class="s1"> 
+<a name="l73"><span class="ln">73   </span></a></span><span class="s0">//                    bluetoothAPI.disconnectFromDevice();</span><span class="s1"> 
+<a name="l74"><span class="ln">74   </span></a></span><span class="s0">////                    mAppStatus.setText(&quot;Ready &quot;);</span><span class="s1"> 
+<a name="l75"><span class="ln">75   </span></a></span><span class="s0">//                    btnConnect.setText(mContext.getResources().getString(R.string.connect));</span><span class="s1"> 
+<a name="l76"><span class="ln">76   </span></a></span><span class="s0">//                } else {</span><span class="s1"> 
+<a name="l77"><span class="ln">77   </span></a></span><span class="s0">//                    // Display the progressbar</span><span class="s1"> 
+<a name="l78"><span class="ln">78   </span></a></span><span class="s0">//                    mScanProgress.setVisibility(View.VISIBLE);</span><span class="s1"> 
+<a name="l79"><span class="ln">79   </span></a></span><span class="s0">//                    bluetoothAPI.connectToDevice(sensors.get(position),</span><span class="s1"> 
+<a name="l80"><span class="ln">80   </span></a></span><span class="s0">//                            mScanProgress,</span><span class="s1"> 
+<a name="l81"><span class="ln">81   </span></a></span><span class="s0">//                            btnConnect);</span><span class="s1"> 
+<a name="l82"><span class="ln">82   </span></a></span><span class="s0">//                }</span><span class="s1"> 
+<a name="l83"><span class="ln">83   </span></a></span><span class="s0">//            });</span><span class="s1"> 
+<a name="l84"><span class="ln">84   </span></a></span><span class="s0">////            sensorAdapterIsInitialized = true;</span><span class="s1"> 
+<a name="l85"><span class="ln">85   </span></a></span><span class="s0">//        }</span><span class="s1"> 
+<a name="l86"><span class="ln">86   </span></a></span><span class="s0">//        catch (Exception e){</span><span class="s1"> 
+<a name="l87"><span class="ln">87   </span></a></span><span class="s0">////            sensorAdapterIsInitialized = false;</span><span class="s1"> 
+<a name="l88"><span class="ln">88   </span></a></span><span class="s0">////            Toast.makeText(mContext, &quot;Adapter failed to bind object&quot; + e.getMessage(), Toast.LENGTH_SHORT).show();</span><span class="s1"> 
+<a name="l89"><span class="ln">89   </span></a></span><span class="s0">//            logMessage(TAG, e.getMessage());</span><span class="s1"> 
+<a name="l90"><span class="ln">90   </span></a></span><span class="s0">//        }</span><span class="s1"> 
+<a name="l91"><span class="ln">91   </span></a></span><span class="s0">//    }</span><span class="s1"> 
+<a name="l92"><span class="ln">92   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l93"><span class="ln">93   </span></a></span><span class="s0">//    @Override</span><span class="s1"> 
+<a name="l94"><span class="ln">94   </span></a></span><span class="s0">//    public int getItemCount() {</span><span class="s1"> 
+<a name="l95"><span class="ln">95   </span></a></span><span class="s0">//        logMessage(&quot;bluetooth .. adapter&quot;, &quot;getItemCount() has: &quot; + sensors.size() + &quot; items&quot;);</span><span class="s1"> 
+<a name="l96"><span class="ln">96   </span></a></span><span class="s0">//        return sensors.size();</span><span class="s1"> 
+<a name="l97"><span class="ln">97   </span></a></span><span class="s0">//    }</span><span class="s1"> 
+<a name="l98"><span class="ln">98   </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l99"><span class="ln">99   </span></a></span><span class="s0">//    public class SensorViewHolder extends RecyclerView.ViewHolder{</span><span class="s1"> 
+<a name="l100"><span class="ln">100  </span></a></span><span class="s0">//        Button btnConnect;</span><span class="s1"> 
+<a name="l101"><span class="ln">101  </span></a></span><span class="s0">//        TextView tvName, tvMac;</span><span class="s1"> 
+<a name="l102"><span class="ln">102  </span></a></span><span class="s0">//        ProgressBar progressBar;</span><span class="s1"> 
+<a name="l103"><span class="ln">103  </span></a></span><span class="s0">//</span><span class="s1"> 
+<a name="l104"><span class="ln">104  </span></a></span><span class="s0">//        public SensorViewHolder(@NonNull View itemView) {</span><span class="s1"> 
+<a name="l105"><span class="ln">105  </span></a></span><span class="s0">//            super(itemView);</span><span class="s1"> 
+<a name="l106"><span class="ln">106  </span></a></span><span class="s0">//            btnConnect = itemView.findViewById(R.id.btn_connect_disconnect);</span><span class="s1"> 
+<a name="l107"><span class="ln">107  </span></a></span><span class="s0">//            tvName = itemView.findViewById(R.id.tv_sensor_name);</span><span class="s1"> 
+<a name="l108"><span class="ln">108  </span></a></span><span class="s0">//            tvMac = itemView.findViewById(R.id.tv_mac);</span><span class="s1"> 
+<a name="l109"><span class="ln">109  </span></a></span><span class="s0">//            progressBar = itemView.findViewById(R.id.pb_connecting);</span><span class="s1"> 
+<a name="l110"><span class="ln">110  </span></a></span><span class="s0">//            logMessage(&quot;bluetooth .. adapter&quot;, &quot;Sensor view holder&quot;);</span><span class="s1"> 
+<a name="l111"><span class="ln">111  </span></a></span><span class="s0">//        }</span><span class="s1"> 
+<a name="l112"><span class="ln">112  </span></a></span><span class="s0">//    }</span><span class="s1"> 
+<a name="l113"><span class="ln">113  </span></a></span><span class="s0">//}</span><span class="s1"> 
+<a name="l114"><span class="ln">114  </span></a></span></pre>
+</body>
+</html>

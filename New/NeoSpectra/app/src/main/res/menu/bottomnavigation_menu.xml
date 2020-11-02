@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/scan_page"
+        android:title="@string/scan"
+        android:icon="@drawable/scan"/>
+
+    <item
+        android:id="@+id/data_page"
+        android:title="@string/data"
+        android:icon="@drawable/icons_article"/>
+
+    <item
+        android:id="@+id/location_page"
+        android:title="@string/location"
+        android:icon="@drawable/icons_location"/>
+    <item
+        android:id="@+id/recomendation_page"
+        android:title="@string/recomendation"
+        android:icon="@drawable/icons_reward"/>
+    <item
+        android:id="@+id/export_page"
+        android:title="@string/export"
+        android:icon="@drawable/icons_export"/>
+</menu>

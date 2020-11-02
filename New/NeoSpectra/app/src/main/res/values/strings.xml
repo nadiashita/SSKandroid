@@ -1,0 +1,210 @@
+<resources>
+    <string name="app_name">NS-Scanner</string>
+
+    <string name="base64encoded">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArUEMm8Fhqx9kbIbRKFzARL6eWPo0l4Pjttn7kZkEscf7T3Tgj23SlFAInhlq65KZ06j6MJ4vgZK62KajxEu1vo41fVfhSMpVMTmccy9yKcN8SJ1+32ZO2IBrL7wWsxkW1iTlfUXNKqNzfn7sa/+QsY2V2vxeze+bynRMpIKhRPh5eM36fjWFOGbJUqhUY4eYSy/idjio8LtATN4X5ZlGDusx+a8Q09zJHVYtGtewkoQNZ4QCth9jAGVPU/KtFcCmPlWxXAytBi9awXRz7sDmpu8st5IG8YtJL+kdkm/W1AMj16lskQWwJ/n7rgZbTj/roJmKEDCwx6ghm4osGU0rmwIDAQAB</string>
+
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+    <string name="title_activity_history">Scan History</string>
+
+    <string name="title_fragment_about_neo_spectra">About NeoSpectra</string>
+    <string name="title_fragment_about_us">About us</string>
+    <string name="about_siware">About Si-Ware</string>
+    <string name="title_fragment_home">Scan</string>
+    <string name="title_fragment_shop">Shop</string>
+
+    <string name="title_fragment_configure">Configure Device</string>
+    <string name="title_fragment_ota">Configure OTA Settings</string>
+    <string name="title_fragment_scan">Scan</string>
+    <string name="title_fragment_power_settings">Power Management</string>
+
+
+    <string name="disconnect">Connected</string>
+    <string name="connect">Connect</string>
+    <string name="welcome_user">Welcome, Amanda!</string>
+
+    <string name="lactose">Lactose</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Devices</string>
+    <string name="reference_material">Correction Using Reference Material</string>
+    <string name="about_neo_body1"> - NeoSpectra sensors are low cost, miniaturized, OEM spectral sensors, that are based on Micro Electro Mechanical Systems (MEMS) technology. Spectral sensors read input light and generate the corresponding spectral response with different wide Near InfraRed (NIR) spectral ranges between 1,150 nm and 2,500 nm.</string>
+    <string name="about_neo_body2"> - NeoSpectra’s unique features can enable new usage models for material composition analysis and identification in wide range of applications areas.</string>
+    <string name="about_us_body1">Si-Ware Systems (SWS) is a fabless semiconductor company that is fostering silicon innovation. SWS capitalized on its Optical MEMS Technology IP to develop a unique Optical MEMS platform – Silicon integrated Micro Optical Systems Technology (SiMOST™), that allows the creation of multiple optical components on silicon chips. Si-Ware Systems’ (SWS) innovative SiMOST™ platform as well as expertise in Application Specific Integrated Circuits (ASICs) design and development are the main enablers of NeoSpectra.</string>
+    <string name="key_Preferences_File">NEO_SPECTRA_DATA_File</string>
+    <string name="title_delete_item">Delete item</string>
+    <string name="ask_to_delete_item">Are you sure you want to delete this record?</string>
+    <string name="subscription_period_monthly">subscription monthly</string>
+    <string name="subscription_period_yearly">subscription yearly</string>
+    <string name="subscription_period_prompt">subscription prompt</string>
+    <string name="subscription_resignup_prompt">subscription resignup</string>
+    <string name="subscription_update_prompt">subscription_update</string>
+    <string name="subscription_prompt_continue">subscription continue</string>
+    <string name="subscription_prompt_cancel">subscription cancel</string>
+    <string name="export">Export</string>
+    <string name="module_name">Bread</string>
+    <string name="buy_module">Buy Modules</string>
+    <string name="buy">Buy</string>
+    <string name="use">Use</string>
+    <string name="module_price">$14</string>
+    <string name="bb_tv_tag">bb_tag_name</string>
+    <string name="bb_iv_tag">bb_tag_icon</string>
+    <string name="module_details">Module Details</string>
+    <string name="timestamp">09:42 AM - 06/02/2018</string>
+    <string name="ask_every_time">Ask me every time</string>
+    <string name="take_image">Take Images</string>
+    <string name="dont_take">Don\'t take image</string>
+    <string name="desc_module_icon">Description Icon</string>
+    <string name="unit">Unit</string>
+    <string name="clear">Clear All</string>
+    <string name="filter">Filter</string>
+    <string name="ready">Ready</string>
+    <string name="bluetooth_scan">Searching for NeoSpectra Scanners</string>
+    <string name="bluetooth_found_devices">Found Devices…</string>
+
+    <!--Bluetooth parameters-->
+
+    <string-array name="BLE_Services">
+        <item>P3 Service</item>
+        <item>System Status Service</item>
+        <item>Memory Service</item>
+        <item>Battery Service</item>
+    </string-array>
+
+    <string-array name="operations_spinner_content">
+        <item>01: Read Module ID</item>
+        <item>03: Run PSD</item>
+        <item>04: Run Background</item>
+        <item>05: Run Absorbance</item>
+        <item>06: Run Gain Adjustment</item>
+        <item>07: Burn Gain</item>
+        <item>08: Burn Self</item>
+        <item>09: Burn WLN</item>
+        <item>10: Run Self Correction</item>
+        <item>11: Run Wavelength Correction Background</item>
+        <item>12: Run Wavelength Correction</item>
+        <item>13: Restore Defaults</item>
+        <item>27: Set Optical Settings</item>
+        <item>90: Get Calibration Wells</item>
+        <item>91: Get Calibration Wells</item>
+    </string-array>
+
+    <string-array name="data_points_spinner_content">
+        <item>1: 65 points</item>
+        <item>2: 129 points</item>
+        <item>3: 257 points</item>
+    </string-array>
+
+    <string-array name="data_points">
+        <item>65 points</item>
+        <item>129 points</item>
+        <item>257 points</item>
+    </string-array>
+
+    <string-array name="optical_gain_settings">
+        <item>Default</item>
+    </string-array>
+
+
+    <string-array name="data_points_number">disable</string-array>
+
+
+    <string-array name="optical_gain_spinner_content">
+        <item>0: Use Settings Saved on DVK</item>
+        <item>1: Use Calculated Settings</item>
+        <item>2: Use External Settings</item>
+    </string-array>
+
+    <string-array name="apodization_spinner_content">
+        <item>0: Boxcar</item>
+        <item>1: Gaussian</item>
+        <item>2: Happ-Genzel</item>
+        <item>3: Lorenz</item>
+    </string-array>
+
+    <string-array name="apodization_function">
+        <item>Boxcar</item>
+        <item>Gaussian</item>
+        <item>Happ-Genzel</item>
+        <item>Lorenz</item>
+    </string-array>
+
+    <string-array name="zero_padding_spinner_content">
+        <item>1: 8k points</item>
+        <item>2: 16k points</item>
+        <item>3: 32k points</item>
+    </string-array>
+
+    <string-array name="fft_points">
+        <item>8k points</item>
+        <item>16k points</item>
+        <item>32k points</item>
+    </string-array>
+
+    <string-array name="run_mode_spinner_content">
+        <item>0: Single Mode</item>
+        <item>1: Continuous Mode</item>
+    </string-array>
+
+    <string-array name="run_mode">
+        <item>Single Mode</item>
+        <item>Continuous Mode</item>
+    </string-array>
+
+    <string-array name="clear_optical_gain_settings">
+        <item>Clear all optical gain settings</item>
+        <item>Cancel</item>
+    </string-array>
+
+    <string-array name="restore_default">
+        <item>Restore all Settings to factory settings</item>
+        <item>Cancel</item>
+    </string-array>
+
+
+    <string-array name="wavelength_correction">
+        <item>Run Self Correction</item>
+        <item>Cancel</item>
+    </string-array>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+
+    <!-- Example settings for Notifications -->
+
+    <string name="tricordr">TriCordr</string>
+    <string name="title_fragment_status">Device Status</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_configure">Settings</string>
+
+
+    <string name="retrieve_scans">Retrieve Scans</string>
+    <string name="clear_history">Clear History</string>
+    <string name="firmware_update">Firmware Update</string>
+    <string name="restore_default_firmware">Restore Default Firmware</string>
+    <string name="ImplementationVersion">6922</string>
+    <string name="SpecificationVersion">1.0</string>
+    <string name="About">About</string>
+
+
+    <string name="scan">Scan</string>
+    <string name="data">Data</string>
+    <string name="location">Location</string>
+    <string name="recomendation">Recomendation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    <string name="export">Export</string>-->
+
+    <string-array name="Spinner_items">
+        <item>-Pilih Tanamanmu-</item>
+        <item>Jagung</item>
+        <item>Kedelai</item>
+        <item>Padi</item>
+    </string-array>
+</resources>
