@@ -21,528 +21,685 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/bottom"
-            android:layout_below="@+id/title">
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:background="@android:color/white">
+
+                //Layout Group 1
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#E7F0FF"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay1"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textView1A"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="pH-H2O"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtPhh20"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="pH-H2O"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay2"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textView2A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="pH-KCl"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtPhkcl"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="pH-KCl"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                //Layout Group 2
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur"
+                    <LinearLayout
+                        android:id="@+id/Lay3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="pH-H2O"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur"
+                        <TextView
+                            android:id="@+id/textView3A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="C-org (%)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtCorg"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="C-org (%)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="pH-H2O"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur2"
-                        android:layout_width="372dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="pH-KCl"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay4"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur2"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="pH-KCl"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        <TextView
+                            android:id="@+id/textView4A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="N-total (%)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtNtotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="N-total (%)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                //Layout Group 3
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur3"
-                        android:layout_width="372dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="C-org (%)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur3"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="C-org (%)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur4"
-                        android:layout_width="372dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="N-total (%)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay5"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur4"
+                        <TextView
+                            android:id="@+id/textView5A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:text="p2Os-HCl 25% (mg/100)"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtp20sHcl"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:hint="p2Os-HCl 25% (mg/100)"
+                            android:padding="8dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="N-total (%)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay6"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textView6A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="K2O-HCl 25% (mg/100)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtk20Hcl"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:fontFamily="@font/poppins_regular"
+                            android:ems="10"
+                            android:hint="K2O-HCl 25% (mg/100)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                //Layout Group 4
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur5"
-                        android:layout_width="372dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="p2Os-HCl 25% (mg/100)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur5"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="p2Os-HCl 25% (mg/100)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur6"
-                        android:layout_width="372dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="K2O-HCl 25% (mg/100)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay7"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur6"
+                        <TextView
+                            android:id="@+id/textView7A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="p2OS-Bray I (ppm)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtp20sBray"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="p2OS-Bray I (ppm)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="K2O-HCl 25% (mg/100)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay8"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textView8A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="p2Os-Olsen (ppm)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtP20Olsen"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="p2Os-Olsen (ppm)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                //Layout Group 5
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur7"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="p2OS- Bray I (ppm)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay9"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur7"
+                        <TextView
+                            android:id="@+id/textView9A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Ca (cmolc/kg)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtCa"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="Ca (cmolc/kg)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="p2OS- Bray I (ppm)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur8"
-                        android:layout_width="372dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="p2Os- Olsen (ppm)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay10"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur8"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="p2Os- Olsen (ppm)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        <TextView
+                            android:id="@+id/textVie10A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Mg (cmolc/kg)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtMg"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="Mg (cmolc/kg)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                //Layout Group 6
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur9"
-                        android:layout_width="372dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Ca (cmolc/kg)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur9"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="Ca (cmolc/kg)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur10"
-                        android:layout_width="372dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Mg (cmolc/kg)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay11"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur10"
+                        <TextView
+                            android:id="@+id/textVie11A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="K (cmolc/kg)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtK"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="K (cmolc/kg)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="Mg (cmolc/kg)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay12"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textVie12A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Na (cmolc/kg)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtNa"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="Na (cmolc/kg)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                //Layout Group 7
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur11"
-                        android:layout_width="372dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="K (cmolc/kg)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur11"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="K (cmolc/kg)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur12"
-                        android:layout_width="372dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Na (cmolc/kg)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay13"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur12"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="Na (cmolc/kg)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        <TextView
+                            android:id="@+id/textVie13A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="KB (%)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
 
+                        <TextView
+                            android:id="@+id/txtKb"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="KB (%)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
                 </LinearLayout>
+
+                //Layout Group 8
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvUnsur13"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="KB (%)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
+                        android:id="@+id/Lay14"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
 
-                    <EditText
-                        android:id="@+id/editDataunsur13"
+                        <TextView
+                            android:id="@+id/textVie14A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Pasir (%)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtPasir"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="Pasir (%)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="KB (%)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay15"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textVie15A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Debu (%)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtDebu"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="Debu (%)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Lay16"
+                        android:background="#E7F0FF"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textVie16A"
+                            android:layout_width="372dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Liat (%)"
+                            android:textColor="#000000"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/txtLiat"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/input_bg"
+                            android:ems="10"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="Liat (%)"
+                            android:padding="8dp"
+                            android:textColorHint="#76797A"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="#E7F0FF"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp">
+                //End Group
 
-                    <TextView
-                        android:id="@+id/tvUnsur14"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Pasir (%)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur14"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="Pasir (%)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur15"
-                        android:layout_width="372dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Debu (%)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur15"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="Debu (%)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/tvUnsur16"
-                        android:layout_width="372dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Liat (%)"
-                        android:textColor="#000000"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editDataunsur16"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/input_bg"
-                        android:ems="10"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="Liat (%)"
-                        android:padding="8dp"
-                        android:textColorHint="#76797A"
-                        android:textSize="15dp" />
-
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 

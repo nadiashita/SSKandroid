@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,34 +34,51 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.ybq.android.spinkit.style.Wave;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.si_ware.neospectra.Activities.ConnectActivity;
 import com.si_ware.neospectra.Activities.Interfaces.Objects;
 import com.si_ware.neospectra.Activities.IntroActivity;
 import com.si_ware.neospectra.BluetoothSDK.SWS_P3API;
+import com.si_ware.neospectra.ConfigurableProperties;
+import com.si_ware.neospectra.DataElements;
 import com.si_ware.neospectra.Global.GlobalVariables;
 import com.si_ware.neospectra.Models.dbReading;
+import com.si_ware.neospectra.OutputData;
 import com.si_ware.neospectra.R;
+import com.si_ware.neospectra.ResultPrediction;
 import com.si_ware.neospectra.Scan.Presenter.ScanPresenter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
+import java.net.URI;
+import java.util.TimeZone;
+
+import com.google.gson.Gson;
+import com.si_ware.neospectra.dbtable.DBHelper;
 
 import static com.si_ware.neospectra.Global.GlobalVariables.MAX_SCANNER_MEMORY;
 import static com.si_ware.neospectra.Global.GlobalVariables.bluetoothAPI;
@@ -107,8 +123,14 @@ public class ScanPageFragment extends Fragment {
     private double[] ySend;
     private Objects getset = new Objects();
     private float[] yValsnew;
+    private DBHelper dbHelper;
+    private String bray, ca, clay, cn, hclk2o, hclp2o5, jumlah, k, kbadj, kjelhal, ktk, mg, morgan, na, olsen, phh2o, phkcl, retensip,
+            sand, silt, wbc;
 
-    String[] Resolution = {"1", "2", "3"};
+    String[] Resolution =
+            {
+                    "1", "2", "3"
+            };
     String[] Optical = {"2", "4", "6", "8", "10"};
 
     RequestQueue queue;
@@ -184,36 +206,6 @@ public class ScanPageFragment extends Fragment {
         btnScan.setCardBackgroundColor(Color.parseColor("#0A376A"));
         btnProcess.setEnabled(true);
         btnProcess.setCardBackgroundColor(Color.parseColor("#0A376A"));
-
-
-//        displayGraph(); // new code
-
-        mGraphView.getLegendRenderer().setVisible(true);
-        mGraphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
-        if (maxValue == 0) {
-            mGraphView.getViewport().setMinY(90);
-            mGraphView.getViewport().setMaxY(110);
-            mGraphView.getViewport().setMinX(1100);
-            mGraphView.getViewport().setMaxX(2650);
-        } else {
-            mGraphView.getViewport().setMaxY(maxValue);
-            mGraphView.getViewport().setScalable(true);
-            mGraphView.getViewport().setScrollable(true);
-            mGraphView.getViewport().setScalableY(true);
-            mGraphView.getViewport().setScrollableY(true);
-        }
-//        mGraphView.getViewport().setYAxisBoundsManual(true);
-//        mGraphView.getViewport().setXAxisBoundsManual(true);
-
-
-        mGraphView.getGridLabelRenderer().setHorizontalLabelsAngle(45);
-        mGraphView.getGridLabelRenderer().setHorizontalAxisTitle("nm");
-
-        mGraphView.getGridLabelRenderer().setVerticalAxisTitle("%Refl.");
-        mGraphView.getGridLabelRenderer().setVerticalLabelsAlign(Paint.Align.RIGHT);
-
-        mGraphView.getViewport().setDrawBorder(true); // end new code
 
         // Get all needed configuration settings
 //        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -497,12 +489,12 @@ public class ScanPageFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter(GlobalVariables.INTENT_ACTION));
 
-        if (bluetoothAPI != null) {
-            if (!bluetoothAPI.isDeviceConnected()) {
-                endActivity();
-                return;
-            }
-        }
+//        if (bluetoothAPI != null) {
+//            if (!bluetoothAPI.isDeviceConnected()) {
+//                endActivity();
+//                return;
+//            }
+//        }
     }
 
 
@@ -532,14 +524,7 @@ public class ScanPageFragment extends Fragment {
                             "Reason: " + intent.getStringExtra("reason") + "\n" +
                             "Error: " + intent.getStringExtra("err") + "\n" +
                             "data : " + Arrays.toString(intent.getDoubleArrayExtra("data")) + "\n");
-//                    double[] dataRef = convertDataToT(intent.getDoubleArrayExtra("data"));
-//                    yValsnew = new float[dataRef.length];
-//                    for (int k = 0; k < dataRef.length; k++) {
-//                        float newxVlas = (float) dataRef[k];
-//                        yValsnew[k] = newxVlas;
-//                    }
-//                    String s = "{\"Reflectance\":" + Arrays.toString(yValsnew) + "}";
-//
+                    String s = "{\"Reflectance\":" + Arrays.toString(intent.getDoubleArrayExtra("data")) + "}";
 //                    getset.setReflectance(s);
                     break;
                 // Case sensor notification with failure
@@ -810,16 +795,16 @@ public class ScanPageFragment extends Fragment {
             scanPresenter = new ScanPresenter();
         }
         // Don't complete the process if the device not connected
-        if (bluetoothAPI == null || !bluetoothAPI.isDeviceConnected()) {
-            showAlertMessage(getActivity(),
-                    "Device not connected",
-                    "Please! Ensure that you have a connected device firstly");
-
-            Intent iMain = new Intent(mContext, ConnectActivity.class);
-            iMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(iMain);
-            return;
-        }
+//        if (bluetoothAPI == null || !bluetoothAPI.isDeviceConnected()) {
+//            showAlertMessage(getActivity(),
+//                    "Device not connected",
+//                    "Please! Ensure that you have a connected device firstly");
+//
+//            Intent iMain = new Intent(mContext, ConnectActivity.class);
+//            iMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(iMain);
+//            return;
+//        }
         System.out.println("error_sensor_reading= " + error_sensor_reading);
 
         if (error_sensor_reading == true) {
@@ -837,15 +822,15 @@ public class ScanPageFragment extends Fragment {
             scanPresenter = new ScanPresenter();
         }
         // Don't complete the process if the device not connected
-        if (bluetoothAPI == null || !bluetoothAPI.isDeviceConnected()) {
-            showAlertMessage(getActivity(),
-                    "Device not connected",
-                    "Please! Ensure that you have a connected device firstly");
-            Intent iMain = new Intent(mContext, ConnectActivity.class);
-            iMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(iMain);
-            return;
-        }
+//        if (bluetoothAPI == null || !bluetoothAPI.isDeviceConnected()) {
+//            showAlertMessage(getActivity(),
+//                    "Device not connected",
+//                    "Please! Ensure that you have a connected device firstly");
+//            Intent iMain = new Intent(mContext, ConnectActivity.class);
+//            iMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(iMain);
+//            return;
+//        }
         System.out.println("error_sensor_reading= " + error_sensor_reading);
         if (error_sensor_reading == true) {
             System.out.println("error_sensor_reading==true");
@@ -884,7 +869,7 @@ public class ScanPageFragment extends Fragment {
                     double[] xVals = sensorReading.getXReading();
                     double[] yVals = sensorReading.getYReading();
 
-                    double[] yRef = convertRefl(yVals);
+                    double[] yRef = convertDataToT(yVals);
 
                     yValsnew = new float[yRef.length];
                     for (int k = 0; k < yRef.length; k++) {
@@ -892,9 +877,9 @@ public class ScanPageFragment extends Fragment {
                         yValsnew[k] = newxVlas;
                     }
 
-                    Log.e("value float", Arrays.toString(yValsnew));
-                    String s = "{\"Reflectance\":" + Arrays.toString(yValsnew) + "}";
-                    getset.setReflectance(s);
+//                    Log.e("value float", Arrays.toString(yValsnew));
+//                    String s = "{\"Reflectance\":" + Arrays.toString(yValsnew) + "}";
+//                    getset.setReflectance(s);
 
                     for (int j = xVals.length - 1; j >= 0; --j) {
                         dataPoints.add(new DataPoint(1e7 / xVals[j], yVals[j] * 100));
@@ -912,7 +897,7 @@ public class ScanPageFragment extends Fragment {
                     series.setTitle("Meas. " + String.valueOf(i + 1));
                     mGraphView.addSeries(series);
 
-                    measurementCount_Spectroscopy++; // new code
+
                 }
             }
         }
@@ -958,64 +943,172 @@ public class ScanPageFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void send() {
-        Log.e("pesan", getset.getReflectance());
-        Toast.makeText(mContext, getset.getReflectance(), Toast.LENGTH_SHORT).show();
+        //final String reflect = String.valueOf(getReflectance());
+        //final String reflect = "[1.4923595577160977, 1.4858127248658966, 1.483462090254477, 1.4811798041653559, 1.478962913306713, 1.4855769966447907, 1.4980369452002196, 1.5107358150374268, 1.5237569761463843, 1.5439514620142998, 1.5649235190483481, 1.5867448877083867, 1.6051176087587002, 1.6177447487272167, 1.6306515729737083, 1.6438533274801315, 1.6400895455127638, 1.632582440983541, 1.6252176612788953, 1.6198725907564453, 1.6213354492364858, 1.6228053264183926, 1.6242822812641795, 1.6099011319227792, 1.5868067126139442, 1.5648237847516457, 1.544745673922674, 1.5636719309528466, 1.5836740725983514, 1.6048689016001756, 1.5833574932821064, 1.5116491299523145, 1.4495783456215772, 1.3947959447352576, 1.2918057677397976, 1.1992397828844443, 1.122286417387327, 1.058209672376652, 1.007455383951984, 0.9616205980336366, 0.919799976119593, 0.8816754541295957, 0.846415634923224, 0.8134035619782354, 0.7825288802788117, 0.7581106852285208, 0.7347173332245207, 0.712253776941942, 0.6959946688831977, 0.6868673557709583, 0.6777822485848614, 0.6687370993128493, 0.6634532674684838, 0.6588496038600996, 0.6542135218391817, 0.650439036485605, 0.6494303714709287, 0.6484085532337851, 0.6473733189682102, 0.6505096086613632, 0.6560675123165075, 0.6617844918500856, 0.6678320064423794, 0.6773980334664261, 0.687332888702839, 0.6976609392195393, 0.7077864440092541, 0.7175350110240191, 0.7276659878530138, 0.73820535178606, 0.7374533387312248, 0.7346946485373929, 0.7319157493729622, 0.7308950756427758, 0.7351101120376661, 0.7394239441643337, 0.7438404496531559, 0.7388678656148142, 0.7290543091186971, 0.7193294027380683, 0.7099151909196766, 0.70403827891758, 0.6981470703452413, 0.6922410365016064, 0.6903190692651037, 0.6930791228458978, 0.6959051509864557, 0.6987995815588827, 0.6956334462854157, 0.6914799136196662, 0.6872836231999556, 0.6848054759532685, 0.6871663435453333, 0.6895964758206469, 0.6920991381726384, 0.6881997514678868, 0.6811207774698556, 0.6740306857884835, 0.6675105117176813, 0.6683854189637848, 0.6692756243091352, 0.6701814495037131, 0.6716844131505948, 0.6738771613724109, 0.6761320170891266, 0.678451602444802, 0.6948243849381603, 0.7143272063658798, 0.7352377119243911, 0.7538648675483346, 0.7634400480774127, 0.7734757182625362, 0.78400913200663, 0.7918237369037693, 0.7984098355956745, 0.8052408495927444, 0.8111444969731852, 0.8044351815029898, 0.7976787256758275, 0.7908738034859917, 0.7841548107916759, 0.7775187541599177, 0.770818732192338, 0.7640528921612861, 0.7977884610770649, 0.8411180402148933, 0.8905199272907379, 0.9244988850601861, 0.9057541640924206, 0.887330474469635, 0.8692037451604195, 0.8856491935982594, 0.9199039669891226, 0.9579840144303058, 1.0003030333095635, 1.0438001310390779, 1.0933407551068128, 1.1506824136223224, 1.0894765877615242, 0.9454627210723413, 0.8355442387791785, 0.7462631846605977, 0.6637432281323373, 0.5924926552028972, 0.5301453236911169, 0.48125073981115035, 0.45066956195723673, 0.4216368791132292, 0.3939775868484456, 0.37149194190930995, 0.3513256753499769, 0.3317250220153034, 0.3131407785267416, 0.2989077723773725, 0.28493519458393496, 0.27120896669320177, 0.2629987969754946, 0.25983954212696614, 0.25664953991987993, 0.25342813762191524, 0.24960152947235756, 0.24568123315833998, 0.24171939608237425, 0.238101623523044, 0.23527594257716072, 0.2324141312944353, 0.2295155441563728, 0.22782156831320188, 0.22658716675319324, 0.22533190884787488, 0.22403231016346525, 0.22254695182739576, 0.22103637366931686, 0.21949994774221085, 0.21904981271046203, 0.219609059412783, 0.22018246090487753, 0.22077017247296676, 0.22303717826125743, 0.22549986941964445, 0.22803341709617733, 0.23118147780444603, 0.23555121429637055, 0.24007856001194133, 0.24477213503225362, 0.25245972876455547, 0.26152510502500387, 0.2709911285747663, 0.27890262661229726, 0.274278608942148, 0.2695808791948591, 0.26480715500720775, 0.2604653383026738, 0.25650110129093534, 0.2524811584144779, 0.24840397041427206, 0.24886572731886195, 0.249638296295987, 0.25043289043817996, 0.25154103107053394, 0.2532471330561095, 0.25500381041892867, 0.25681361748936843, 0.26073752051034915, 0.2655234002293547, 0.27049202702863523, 0.27559916289715847, 0.2805806171691589, 0.28575828540902476, 0.291145055803157, 0.30060574516686345, 0.3138064791234264, 0.3277592057718932, 0.3425384322994569, 0.3476534333532286, 0.35243566134093157, 0.3574020646420728, 0.3654625311350187, 0.3793530655132743, 0.39404055914896874, 0.40960457464744937, 0.4157154859762159, 0.41870619427713973, 0.4218053699579598, 0.4258835104095832, 0.43476182516063017, 0.4440338252839598, 0.453728497962529, 0.45411403013578727, 0.4469808275076322, 0.43980396196776317, 0.4325819393582788, 0.42045962461476527, 0.4082495740307261, 0.3961233724474999, 0.3943631551660014, 0.41103574614622995, 0.42884897199882216, 0.44794059373982753, 0.4249756272601481, 0.3909625413993561, 0.3586987573477003, 0.3284363733676303, 0.30166360729313274, 0.27594451540608794, 0.25117512039482465, 0.23389122887124383, 0.22169775881291762, 0.20952791502980017, 0.19737754868412105, 0.1891637996614425, 0.18098640907035374, 0.1727528880332392, 0.16741208053340115, 0.16685723288734378, 0.16629203228837086, 0.16571618563446414]";
+        double[] reflectance = new double[]{1.4923595577160977, 1.4858127248658966, 1.483462090254477, 1.4811798041653559, 1.478962913306713, 1.4855769966447907, 1.4980369452002196, 1.5107358150374268, 1.5237569761463843, 1.5439514620142998, 1.5649235190483481, 1.5867448877083867, 1.6051176087587002, 1.6177447487272167, 1.6306515729737083, 1.6438533274801315, 1.6400895455127638, 1.632582440983541, 1.6252176612788953, 1.6198725907564453, 1.6213354492364858, 1.6228053264183926, 1.6242822812641795, 1.6099011319227792, 1.5868067126139442, 1.5648237847516457, 1.544745673922674, 1.5636719309528466, 1.5836740725983514, 1.6048689016001756, 1.5833574932821064, 1.5116491299523145, 1.4495783456215772, 1.3947959447352576, 1.2918057677397976, 1.1992397828844443, 1.122286417387327, 1.058209672376652, 1.007455383951984, 0.9616205980336366, 0.919799976119593, 0.8816754541295957, 0.846415634923224, 0.8134035619782354, 0.7825288802788117, 0.7581106852285208, 0.7347173332245207, 0.712253776941942, 0.6959946688831977, 0.6868673557709583, 0.6777822485848614, 0.6687370993128493, 0.6634532674684838, 0.6588496038600996, 0.6542135218391817, 0.650439036485605, 0.6494303714709287, 0.6484085532337851, 0.6473733189682102, 0.6505096086613632, 0.6560675123165075, 0.6617844918500856, 0.6678320064423794, 0.6773980334664261, 0.687332888702839, 0.6976609392195393, 0.7077864440092541, 0.7175350110240191, 0.7276659878530138, 0.73820535178606, 0.7374533387312248, 0.7346946485373929, 0.7319157493729622, 0.7308950756427758, 0.7351101120376661, 0.7394239441643337, 0.7438404496531559, 0.7388678656148142, 0.7290543091186971, 0.7193294027380683, 0.7099151909196766, 0.70403827891758, 0.6981470703452413, 0.6922410365016064, 0.6903190692651037, 0.6930791228458978, 0.6959051509864557, 0.6987995815588827, 0.6956334462854157, 0.6914799136196662, 0.6872836231999556, 0.6848054759532685, 0.6871663435453333, 0.6895964758206469, 0.6920991381726384, 0.6881997514678868, 0.6811207774698556, 0.6740306857884835, 0.6675105117176813, 0.6683854189637848, 0.6692756243091352, 0.6701814495037131, 0.6716844131505948, 0.6738771613724109, 0.6761320170891266, 0.678451602444802, 0.6948243849381603, 0.7143272063658798, 0.7352377119243911, 0.7538648675483346, 0.7634400480774127, 0.7734757182625362, 0.78400913200663, 0.7918237369037693, 0.7984098355956745, 0.8052408495927444, 0.8111444969731852, 0.8044351815029898, 0.7976787256758275, 0.7908738034859917, 0.7841548107916759, 0.7775187541599177, 0.770818732192338, 0.7640528921612861, 0.7977884610770649, 0.8411180402148933, 0.8905199272907379, 0.9244988850601861, 0.9057541640924206, 0.887330474469635, 0.8692037451604195, 0.8856491935982594, 0.9199039669891226, 0.9579840144303058, 1.0003030333095635, 1.0438001310390779, 1.0933407551068128, 1.1506824136223224, 1.0894765877615242, 0.9454627210723413, 0.8355442387791785, 0.7462631846605977, 0.6637432281323373, 0.5924926552028972, 0.5301453236911169, 0.48125073981115035, 0.45066956195723673, 0.4216368791132292, 0.3939775868484456, 0.37149194190930995, 0.3513256753499769, 0.3317250220153034, 0.3131407785267416, 0.2989077723773725, 0.28493519458393496, 0.27120896669320177, 0.2629987969754946, 0.25983954212696614, 0.25664953991987993, 0.25342813762191524, 0.24960152947235756, 0.24568123315833998, 0.24171939608237425, 0.238101623523044, 0.23527594257716072, 0.2324141312944353, 0.2295155441563728, 0.22782156831320188, 0.22658716675319324, 0.22533190884787488, 0.22403231016346525, 0.22254695182739576, 0.22103637366931686, 0.21949994774221085, 0.21904981271046203, 0.219609059412783, 0.22018246090487753, 0.22077017247296676, 0.22303717826125743, 0.22549986941964445, 0.22803341709617733, 0.23118147780444603, 0.23555121429637055, 0.24007856001194133, 0.24477213503225362, 0.25245972876455547, 0.26152510502500387, 0.2709911285747663, 0.27890262661229726, 0.274278608942148, 0.2695808791948591, 0.26480715500720775, 0.2604653383026738, 0.25650110129093534, 0.2524811584144779, 0.24840397041427206, 0.24886572731886195, 0.249638296295987, 0.25043289043817996, 0.25154103107053394, 0.2532471330561095, 0.25500381041892867, 0.25681361748936843, 0.26073752051034915, 0.2655234002293547, 0.27049202702863523, 0.27559916289715847, 0.2805806171691589, 0.28575828540902476, 0.291145055803157, 0.30060574516686345, 0.3138064791234264, 0.3277592057718932, 0.3425384322994569, 0.3476534333532286, 0.35243566134093157, 0.3574020646420728, 0.3654625311350187, 0.3793530655132743, 0.39404055914896874, 0.40960457464744937, 0.4157154859762159, 0.41870619427713973, 0.4218053699579598, 0.4258835104095832, 0.43476182516063017, 0.4440338252839598, 0.453728497962529, 0.45411403013578727, 0.4469808275076322, 0.43980396196776317, 0.4325819393582788, 0.42045962461476527, 0.4082495740307261, 0.3961233724474999, 0.3943631551660014, 0.41103574614622995, 0.42884897199882216, 0.44794059373982753, 0.4249756272601481, 0.3909625413993561, 0.3586987573477003, 0.3284363733676303, 0.30166360729313274, 0.27594451540608794, 0.25117512039482465, 0.23389122887124383, 0.22169775881291762, 0.20952791502980017, 0.19737754868412105, 0.1891637996614425, 0.18098640907035374, 0.1727528880332392, 0.16741208053340115, 0.16685723288734378, 0.16629203228837086, 0.16571618563446414};
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            for (int i = 0; i < reflectance.length; i++)
+            {
+                jsonArray.put(reflectance[i]);
+            }
+            jsonObject.put("reflectance", jsonArray);
+        }
+        catch (JSONException e)
+        {
+            e.getStackTrace();
+        }
+        final String mRequestBody = jsonObject.toString();
+        String URL = ConfigurableProperties.apiService;
 
-//        Wave rotatingCircle = new Wave();
-//        progressBar.setVisibility(View.VISIBLE);
-//        progressBar.setIndeterminateDrawable(rotatingCircle);
-//        lUtama.setVisibility(View.GONE);
-//        lProgress.setVisibility(View.VISIBLE);
-//        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//
-//        final String reflect = getset.getReflectance();
-//        String URL = "https://sskapi.azurewebsites.net/api/Inference/ProcessData";
-//        queue = Volley.newRequestQueue(getActivity());
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            Toast.makeText(getActivity(), "RESPONSE:" + jsonObject, Toast.LENGTH_LONG).show();
-//                            Log.e("response:", response);
-//                            lUtama.setVisibility(View.VISIBLE);
-//                            lProgress.setVisibility(View.GONE);
-//                            progressBar.setVisibility(View.GONE);
-//                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//                lUtama.setVisibility(View.VISIBLE);
-//                lProgress.setVisibility(View.GONE);
-//                progressBar.setVisibility(View.GONE);
-//                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//                Toast.makeText(mContext, "Periksa jaringan dan ulang proses", Toast.LENGTH_SHORT).show();
-//            }
-//        }) {
-//            @Override
-//            public String getBodyContentType() {
-//                return "application/json; charset=utf-8";
-//            }
-//
-//            @Override
-//            public byte[] getBody() throws AuthFailureError {
-//                try {
-//                    return reflect == null ? null : reflect.getBytes("utf-8");
-//                } catch (UnsupportedEncodingException uee) {
-//                    return null;
-//                }
-//            }
-//        };
-//        queue.add(stringRequest);
+//        Toast.makeText(mContext, getset.getReflectance(), Toast.LENGTH_SHORT).show();
 
+        Wave rotatingCircle = new Wave();
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminateDrawable(rotatingCircle);
+        lUtama.setVisibility(View.GONE);
+        lProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        queue = Volley.newRequestQueue(getActivity());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            // manipulate JSONObject to JAVAObject
+                            Gson gson = new Gson();
+                            OutputData outputData = gson.fromJson(jsonObject.toString(), OutputData.class);
+                            // set static DataElements
+                            setDataElement(outputData.data);
+
+                            inputData();
+
+
+                            Toast.makeText(getActivity(), "RESPONSE:" + jsonObject, Toast.LENGTH_LONG).show();
+                            Log.e("response:", response);
+                            lUtama.setVisibility(View.VISIBLE);
+                            lProgress.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
+                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                lUtama.setVisibility(View.VISIBLE);
+                lProgress.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                Toast.makeText(mContext, "Periksa jaringan dan ulang proses", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(600000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
+    private void inputData() {
+
+
+
+        // get data
+        bray = "" + (Float.toString(DataElements.getBray1P2O5()));
+        ca = "" + (Float.toString(DataElements.getCa()));
+        clay = "" + (Float.toString(DataElements.getCLAY()));
+        cn = "" +(Float.toString(DataElements.getCN()));
+        hclk2o = "" + (Float.toString(DataElements.getHCl25K2O()));
+        hclp2o5 = "" + (Float.toString(DataElements.getHCl25P2O5()));
+        jumlah = "" + (Float.toString(DataElements.getJumlah()));
+        k = "" + (Float.toString(DataElements.getK()));
+        kbadj = "" + (Float.toString(DataElements.getKBAdjusted()));
+        kjelhal = "" + (Float.toString(DataElements.getKjeldahlN()));
+        ktk = "" + (Float.toString(DataElements.getKTK()));
+        mg = "" + (Float.toString(DataElements.getMg()));
+        morgan = "" + (Float.toString(DataElements.getMorganK2O()));
+        na = "" + (Float.toString(DataElements.getNa()));
+        olsen = "" + (Float.toString(DataElements.getOlsenP2O5()));
+        phh2o = "" + (Float.toString(DataElements.getPhH2o()));
+        phkcl = "" + (Float.toString(DataElements.getPhKcl()));
+        retensip = "" + (Float.toString(DataElements.getRetensiP()));
+        sand = "" + (Float.toString(DataElements.getSAND()));
+        silt = "" +(Float.toString(DataElements.getSILT()));
+        wbc = "" + (Float.toString(DataElements.getWBC()));
+
+
+
+
+
+        //save to db
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        int tahun = calendar.get(Calendar.YEAR);
+        int bulan = calendar.get(Calendar.MONTH) + 1;
+        int tanggal = calendar.get(Calendar.DAY_OF_MONTH);
+        String timestamp = "" + tahun + "-" + bulan + "-" + tanggal;
+
+
+        long id = dbHelper.insertRecord(
+                "" + bray,
+                "" + ca,
+                "" + clay,
+                "" + cn,
+                "" + hclk2o,
+                "" + hclp2o5,
+                "" + jumlah,
+                "" + k,
+                "" + kbadj,
+                "" + kjelhal,
+                "" + ktk,
+                "" + mg,
+                "" + morgan,
+                "" + na,
+                "" + olsen,
+                "" + phh2o,
+                "" + cn,
+                "" + phkcl,
+                "" + sand,
+                "" + silt,
+                "" + wbc,
+
+                "" + timestamp
+
+
+        );
+
+    }
+
+    public void setDataElement(ResultPrediction[] datas)
+    {
+        for (int i = 0; i < datas.length; i++)
+        {
+            ResultPrediction rp = datas[i];
+            if (rp.elementName.equals("Bray1_P2O5"))
+            {
+                DataElements.setBray1P2O5(rp.elementValue);
+            }
+        }
     }
 
     public static String[] getStrings(double[] a) {
@@ -1049,5 +1142,21 @@ public class ScanPageFragment extends Fragment {
             xAxis[i] = 10000000 / data[i];
         }
         return xAxis;
+    }
+
+    /* modified code */
+
+    /* call this process after doing scan*/
+    public double[] getReflectance() {
+        for (int i = 0; i < gAllSpectra.size(); i++) {
+            dbReading sensorReading = gAllSpectra.get(i);
+            if (sensorReading != null) {
+                if ((sensorReading.getXReading().length != 0) && (sensorReading.getYReading().length != 0)) {
+                    double[] yVals = sensorReading.getYReading();
+                    return convertDataToT(yVals);
+                }
+            }
+        }
+        return null;
     }
 }

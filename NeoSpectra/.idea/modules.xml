@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NeoSpectra.iml" filepath="$PROJECT_DIR$/.idea/modules/NeoSpectra.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidlibsvm-release/SSKandroid.NeoSpectra.androidlibsvm-release.iml" filepath="$PROJECT_DIR$/.idea/modules/androidlibsvm-release/SSKandroid.NeoSpectra.androidlibsvm-release.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SSKandroid.NeoSpectra.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SSKandroid.NeoSpectra.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neospectralib/SSKandroid.NeoSpectra.neospectralib.iml" filepath="$PROJECT_DIR$/.idea/modules/neospectralib/SSKandroid.NeoSpectra.neospectralib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NeoSpectra.iml" filepath="$PROJECT_DIR$/.idea/modules/NeoSpectra.iml" group="NeoSpectra" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidlibsvm-release/NeoSpectra.androidlibsvm-release.iml" filepath="$PROJECT_DIR$/.idea/modules/androidlibsvm-release/NeoSpectra.androidlibsvm-release.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NeoSpectra.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NeoSpectra.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neospectralib/NeoSpectra.neospectralib.iml" filepath="$PROJECT_DIR$/.idea/modules/neospectralib/NeoSpectra.neospectralib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/New.NeoSpectra.iml" filepath="$PROJECT_DIR$/.idea/modules/New.NeoSpectra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/androidlibsvm-release/androidlibsvm-release.iml" filepath="$PROJECT_DIR$/.idea/modules/androidlibsvm-release/androidlibsvm-release.iml" group="NeoSpectra/androidlibsvm-release" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="NeoSpectra/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neospectralib/neospectralib.iml" filepath="$PROJECT_DIR$/.idea/modules/neospectralib/neospectralib.iml" group="NeoSpectra/neospectralib" />
     </modules>
   </component>
 </project>
