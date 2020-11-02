@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.ybq.android.spinkit.style.Wave;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.si_ware.neospectra.Activities.ConnectActivity;
@@ -104,6 +106,7 @@ public class ScanPageFragment extends Fragment {
     ProgressBar progressBar;
     private double[] ySend;
     private Objects getset = new Objects();
+    private float[] yValsnew;
 
     String[] Resolution = {"1", "2", "3"};
     String[] Optical = {"2", "4", "6", "8", "10"};
@@ -181,6 +184,36 @@ public class ScanPageFragment extends Fragment {
         btnScan.setCardBackgroundColor(Color.parseColor("#0A376A"));
         btnProcess.setEnabled(true);
         btnProcess.setCardBackgroundColor(Color.parseColor("#0A376A"));
+
+
+//        displayGraph(); // new code
+
+        mGraphView.getLegendRenderer().setVisible(true);
+        mGraphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+        if (maxValue == 0) {
+            mGraphView.getViewport().setMinY(90);
+            mGraphView.getViewport().setMaxY(110);
+            mGraphView.getViewport().setMinX(1100);
+            mGraphView.getViewport().setMaxX(2650);
+        } else {
+            mGraphView.getViewport().setMaxY(maxValue);
+            mGraphView.getViewport().setScalable(true);
+            mGraphView.getViewport().setScrollable(true);
+            mGraphView.getViewport().setScalableY(true);
+            mGraphView.getViewport().setScrollableY(true);
+        }
+//        mGraphView.getViewport().setYAxisBoundsManual(true);
+//        mGraphView.getViewport().setXAxisBoundsManual(true);
+
+
+        mGraphView.getGridLabelRenderer().setHorizontalLabelsAngle(45);
+        mGraphView.getGridLabelRenderer().setHorizontalAxisTitle("nm");
+
+        mGraphView.getGridLabelRenderer().setVerticalAxisTitle("%Refl.");
+        mGraphView.getGridLabelRenderer().setVerticalLabelsAlign(Paint.Align.RIGHT);
+
+        mGraphView.getViewport().setDrawBorder(true); // end new code
 
         // Get all needed configuration settings
 //        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -499,6 +532,15 @@ public class ScanPageFragment extends Fragment {
                             "Reason: " + intent.getStringExtra("reason") + "\n" +
                             "Error: " + intent.getStringExtra("err") + "\n" +
                             "data : " + Arrays.toString(intent.getDoubleArrayExtra("data")) + "\n");
+//                    double[] dataRef = convertDataToT(intent.getDoubleArrayExtra("data"));
+//                    yValsnew = new float[dataRef.length];
+//                    for (int k = 0; k < dataRef.length; k++) {
+//                        float newxVlas = (float) dataRef[k];
+//                        yValsnew[k] = newxVlas;
+//                    }
+//                    String s = "{\"Reflectance\":" + Arrays.toString(yValsnew) + "}";
+//
+//                    getset.setReflectance(s);
                     break;
                 // Case sensor notification with failure
                 case "sensorNotification_failure":
@@ -842,7 +884,16 @@ public class ScanPageFragment extends Fragment {
                     double[] xVals = sensorReading.getXReading();
                     double[] yVals = sensorReading.getYReading();
 
-                    String s = "{\"Reflectance\":" + Arrays.toString(yVals) + "}";
+                    double[] yRef = convertRefl(yVals);
+
+                    yValsnew = new float[yRef.length];
+                    for (int k = 0; k < yRef.length; k++) {
+                        float newxVlas = (float) yRef[k];
+                        yValsnew[k] = newxVlas;
+                    }
+
+                    Log.e("value float", Arrays.toString(yValsnew));
+                    String s = "{\"Reflectance\":" + Arrays.toString(yValsnew) + "}";
                     getset.setReflectance(s);
 
                     for (int j = xVals.length - 1; j >= 0; --j) {
@@ -852,13 +903,16 @@ public class ScanPageFragment extends Fragment {
                     }
 
                     DataPoint dataPointsArray[] = dataPoints.toArray(new DataPoint[dataPoints.size()]);
+                    Log.e("debugger", Arrays.toString(dataPointsArray));
+//                    String s1 = "{\"Reflectance\":" + Arrays.toString(dataPointsArray) + "}";
+//                    getset.setReflectance(s1);
                     LineGraphSeries<DataPoint> series = new LineGraphSeries(dataPointsArray);
                     series.setThickness(4);
                     series.setColor(colors[i % 12]);
                     series.setTitle("Meas. " + String.valueOf(i + 1));
                     mGraphView.addSeries(series);
 
-
+                    measurementCount_Spectroscopy++; // new code
                 }
             }
         }
@@ -905,59 +959,62 @@ public class ScanPageFragment extends Fragment {
     }
 
     public void send() {
-        Wave rotatingCircle = new Wave();
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.setIndeterminateDrawable(rotatingCircle);
-        lUtama.setVisibility(View.GONE);
-        lProgress.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        Log.e("pesan", getset.getReflectance());
+        Toast.makeText(mContext, getset.getReflectance(), Toast.LENGTH_SHORT).show();
 
-        final String reflect = getset.getReflectance();
-        String URL = "https://sskapi.azurewebsites.net/api/Inference/ProcessData";
-        queue = Volley.newRequestQueue(getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            Toast.makeText(getActivity(), "RESPONSE:" + jsonObject, Toast.LENGTH_LONG).show();
-                            Log.e("response:", response);
-                            lUtama.setVisibility(View.VISIBLE);
-                            lProgress.setVisibility(View.GONE);
-                            progressBar.setVisibility(View.GONE);
-                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                lUtama.setVisibility(View.VISIBLE);
-                lProgress.setVisibility(View.GONE);
-                progressBar.setVisibility(View.GONE);
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                Toast.makeText(mContext, "Periksa jaringan dan ulang proses", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return reflect == null ? null : reflect.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    return null;
-                }
-            }
-        };
-        queue.add(stringRequest);
+//        Wave rotatingCircle = new Wave();
+//        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setIndeterminateDrawable(rotatingCircle);
+//        lUtama.setVisibility(View.GONE);
+//        lProgress.setVisibility(View.VISIBLE);
+//        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//
+//        final String reflect = getset.getReflectance();
+//        String URL = "https://sskapi.azurewebsites.net/api/Inference/ProcessData";
+//        queue = Volley.newRequestQueue(getActivity());
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            Toast.makeText(getActivity(), "RESPONSE:" + jsonObject, Toast.LENGTH_LONG).show();
+//                            Log.e("response:", response);
+//                            lUtama.setVisibility(View.VISIBLE);
+//                            lProgress.setVisibility(View.GONE);
+//                            progressBar.setVisibility(View.GONE);
+//                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//                lUtama.setVisibility(View.VISIBLE);
+//                lProgress.setVisibility(View.GONE);
+//                progressBar.setVisibility(View.GONE);
+//                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//                Toast.makeText(mContext, "Periksa jaringan dan ulang proses", Toast.LENGTH_SHORT).show();
+//            }
+//        }) {
+//            @Override
+//            public String getBodyContentType() {
+//                return "application/json; charset=utf-8";
+//            }
+//
+//            @Override
+//            public byte[] getBody() throws AuthFailureError {
+//                try {
+//                    return reflect == null ? null : reflect.getBytes("utf-8");
+//                } catch (UnsupportedEncodingException uee) {
+//                    return null;
+//                }
+//            }
+//        };
+//        queue.add(stringRequest);
 
     }
 
@@ -968,5 +1025,29 @@ public class ScanPageFragment extends Fragment {
             output[i++] = Arrays.toString(String.valueOf(d).replace("{", "").replace("}", "").split(","));
         }
         return output;
+    }
+
+    public static double[] convertAbstoRefl(double[] data) {
+        double[] xInverse = new double[data.length];
+        for (int i = 0; i < xInverse.length; i++) {
+            xInverse[i] = 100.0 * Math.pow(10.0, -data[i]);
+        }
+        return xInverse;
+    }
+
+    public static double[] convertDataToT(double[] data) {
+        double[] TArray = new double[data.length];
+        for (int i = 0; i < TArray.length; i++) {
+            TArray[i] = data[i] * 100;
+        }
+        return TArray;
+    }
+
+    public static double[] convertRefl(double[] data) {
+        double[] xAxis = new double[data.length];
+        for (int i = 0; i < xAxis.length; i++) {
+            xAxis[i] = 10000000 / data[i];
+        }
+        return xAxis;
     }
 }

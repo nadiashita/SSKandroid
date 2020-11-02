@@ -1,5 +1,7 @@
 package balittanah.mainpage;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -48,7 +50,7 @@ public class MainPage extends AppCompatActivity {
                     getSupportActionBar().setTitle("Scanning");
                 } else if (item.getItemId()==R.id.navigation_data){
                     fragmentTransaction.replace(R.id.nav_host_fragment, dataPageFragment);
-                    getSupportActionBar().setTitle("Data Unsur");
+                    getSupportActionBar().setTitle("balittanah.mainpage.Data Unsur");
                 } else if (item.getItemId()==R.id.navigation_location){
                     fragmentTransaction.replace(R.id.nav_host_fragment, locationPageFragment);
                     getSupportActionBar().setTitle("Info Lokasi");
@@ -64,5 +66,4 @@ public class MainPage extends AppCompatActivity {
             }
         });
     }
-
 }
